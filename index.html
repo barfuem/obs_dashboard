@@ -62,42 +62,21 @@
   #alerts.al-right { justify-content: flex-end; }
   .alert {
     --acol: #9147ff;
-    position: relative; max-width: min(92%, var(--awidth, 900px));
+    position: relative; max-width: 92%;
     font-size: var(--asize, 34px);
     font-family: var(--font, 'Inter'); font-weight: var(--weight, 600);
-    padding: var(--apad, 24px) calc(var(--apad, 24px) * 1.4) calc(var(--apad, 24px) + 6px);
-    border-radius: var(--aradius, 18px);
-    background: var(--abg, rgba(14,14,16,.85));
-    border: var(--abw, 3px) solid var(--abcol, var(--acol));
-    box-shadow: 0 0 var(--aglowsize, 30px) var(--aglowcol, transparent), 0 8px 24px rgba(0,0,0,.45);
     text-shadow: var(--shadow, none);
     animation: var(--ain, a-pop) var(--adur-in, 600ms) cubic-bezier(.2,.8,.2,1) both;
   }
-  .alert .icon { font-size: var(--aicon, 1.7em); line-height: 1; display: block; }
-  .alert .icon-img { height: 1em; width: auto; display: block; image-rendering: auto; }
-  .alert.l-card .icon, .alert.l-imagetop .icon { margin: 0 auto .15em; width: max-content; }
-  .alert.l-imagetop .icon { font-size: calc(var(--aicon, 1.7em) * 2); }
-  .alert.l-banner { display: flex; align-items: center; gap: .55em; }
-  .alert.l-minimal { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0; }
-  .alert.l-minimal .icon { margin: 0 auto .1em; width: max-content; }
+  .alert .gif { margin: 0 auto .2em; width: max-content; max-width: 100%; }
+  .alert .gif img { display: block; height: var(--agif, 240px); max-width: 100%; width: auto; object-fit: contain; }
   .alert.ta-left { text-align: left; } .alert.ta-center { text-align: center; } .alert.ta-right { text-align: right; }
-  .alert.ta-left.l-card .icon, .alert.ta-left.l-imagetop .icon { margin-left: 0; }
-  .alert.ta-right.l-card .icon, .alert.ta-right.l-imagetop .icon { margin-right: 0; }
-  .alert.ia-wobble .icon { animation: wobble 1.6s ease-in-out infinite; }
-  .alert.ia-bounce .icon { animation: ibounce 1s ease-in-out infinite; }
-  .alert.ia-spin .icon { animation: ispin 2.4s linear infinite; }
-  .alert.ia-pulse .icon { animation: ipulse 1.2s ease-in-out infinite; }
+  .alert.ta-left .gif { margin-left: 0; } .alert.ta-right .gif { margin-right: 0; }
   .alert .title { font-weight: 800; line-height: 1.2; color: var(--atitle, #fff); font-size: var(--atscale, 1em); }
   .alert.upper .title { text-transform: uppercase; }
   .alert .title b { color: var(--aname, var(--acol)); font-weight: 900; }
   .alert .sub { font-size: .55em; color: var(--asubcol, #d0d0d8); margin-top: .25em; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
   .alert .amsg { font-size: var(--amsgsize, .62em); color: var(--amsgcol, #fff); margin-top: .45em; font-weight: var(--weight, 600); overflow-wrap: anywhere; }
-  .alert .bar { position: absolute; left: var(--aradius, 18px); right: var(--aradius, 18px); bottom: 6px; height: 4px; border-radius: 4px; background: var(--acol); transform-origin: left; animation: shrink var(--alen, 7s) linear both; opacity: .85; }
-  .alert.l-minimal .bar { bottom: -10px; left: 0; right: 0; }
-  @keyframes wobble { 0%,100% { transform: rotate(-8deg) scale(1); } 50% { transform: rotate(8deg) scale(1.12); } }
-  @keyframes ibounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-18%); } }
-  @keyframes ispin { to { transform: rotate(360deg); } }
-  @keyframes ipulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.18); } }
   @keyframes shrink { from { transform: scaleX(1); } to { transform: scaleX(0); } }
   @keyframes o-fade { to { opacity: 0; } }
   @keyframes o-zoom { to { opacity: 0; transform: scale(.6); } }
@@ -131,6 +110,8 @@
   .bb.st-tex .bb-fill { background: none; background-image: var(--tx-fg); background-size: calc(var(--px) * var(--bw, 182)) 100%; background-repeat: no-repeat; background-color: var(--tx-tint, transparent); background-blend-mode: multiply; border-radius: 0; }
   .bb.st-tex .bb-notch { display: none; }
   .bb.st-tex .bb-ghost { top: 0; bottom: 0; background: rgba(255,255,255,.55); }
+  .mcf { -webkit-text-fill-color: transparent; text-shadow: none !important; display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: middle;
+    background-repeat: no-repeat; background-size: 100% 100%; image-rendering: pixelated; }
   .bb-skull.tex { display: inline-block; background-repeat: no-repeat; image-rendering: pixelated; }
   .bb.st-flat .bb-fill { background: var(--c2); }
   .bb.st-grad .bb-fill { background: linear-gradient(90deg, var(--c2), var(--g2)); }
@@ -186,49 +167,18 @@
   /* Chat im Minecraft-Stil */
   #chat.theme-mc .msg { background: rgba(0,0,0,.45); border-radius: 0; padding: .08em .35em; }
   #chat.theme-mc .msg .sep { margin-right: .35em; }
-  /* Alert: Erfolg erzielt (Toast) */
-  .alert.l-mc-toast { display: flex; align-items: center; gap: .55em; text-align: left; border-radius: .18em;
-    background: #212121 !important; border: .12em solid #000 !important; box-shadow: inset 0 0 0 .1em #5a5a5a, inset .14em .14em 0 .1em #3a3a3a, 0 .2em .6em rgba(0,0,0,.5) !important;
-    padding: .45em .8em .45em .5em; }
-  .alert.l-mc-toast .txt { display: flex; flex-direction: column; }
-  .alert.l-mc-toast .sub { order: -1; color: #FFFF55 !important; text-transform: none; font-size: .62em; letter-spacing: 0; margin: 0 0 .15em; }
-  .alert.l-mc-toast .title { color: #fff; font-size: .78em; }
-  .alert.l-mc-toast .title b { color: #FFFF55; }
-  .alert.l-mc-toast .icon { margin: 0; font-size: 1.5em; filter: drop-shadow(.06em .06em 0 rgba(0,0,0,.6)); }
-  .alert.l-mc-toast { min-width: 12em; animation-timing-function: cubic-bezier(.2,1.4,.4,1) !important; }
-  .alert.l-mc-toast .bar { display: none; }
-  /* Alert: /title-Befehl */
-  .alert.l-mc-title { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0; text-shadow: .1em .1em 0 #3f3f3f; }
-  .alert.l-mc-title .title { font-size: 2.2em; }
-  .alert.l-mc-title .sub { font-size: .8em; color: #fff; text-transform: none; text-shadow: .1em .1em 0 #3f3f3f; }
-  .alert.l-mc-title .icon { margin: 0 auto .1em; width: max-content; }
-  .alert.l-mc-title .bar { display: none; }
-  /* Alert: Item-Tooltip */
-  .alert.l-mc-tooltip { background: rgba(16,0,16,.94) !important; border: .12em solid transparent !important; border-radius: .12em;
-    border-image: linear-gradient(#5000ff, #28007f) 1 !important; box-shadow: 0 0 0 .12em rgba(16,0,16,.94) !important; text-shadow: .1em .1em 0 #3f3f3f; }
-  .alert.l-mc-tooltip .icon { margin: 0 auto .15em; width: max-content; }
   /* Items: Drehen wie fallengelassen, Verzauberungs-Glanz, Inventar-Slot */
   .mc-item { position: relative; display: inline-block; line-height: 0; }
   .mc-item .glint { position: absolute; inset: 0; display: none; pointer-events: none;
     -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     background: linear-gradient(120deg, transparent 0 35%, rgba(190,110,255,.85) 45%, rgba(255,200,255,.9) 50%, rgba(190,110,255,.85) 55%, transparent 65% 100%);
     background-size: 300% 100%; animation: glint 2.6s linear infinite; mix-blend-mode: screen; }
-  .alert.glinty .mc-item .glint { display: block; }
   @keyframes glint { from { background-position: 100% 0; } to { background-position: -50% 0; } }
-  .alert.ia-item .icon { animation: itemspin 3.2s linear infinite; }
-  @keyframes itemspin {
-    0% { transform: translateY(0) scaleX(1); } 25% { transform: translateY(-10%) scaleX(.12); } 50% { transform: translateY(-14%) scaleX(-1); }
-    75% { transform: translateY(-10%) scaleX(-.12); } 100% { transform: translateY(0) scaleX(1); } }
-  .alert.ia-float .icon { animation: ifloat 2.4s ease-in-out infinite; }
-  @keyframes ifloat { 50% { transform: translateY(-12%); } }
-  .alert.slot .icon { background: #8b8b8b; padding: .16em; box-shadow: inset .09em .09em 0 #373737, inset -.09em -.09em 0 #ffffff; border: .05em solid #000; line-height: 0; }
   .apx { position: fixed; width: var(--s, 6px); height: var(--s, 6px); z-index: 50; pointer-events: none; image-rendering: pixelated;
     animation: apx 1.3s cubic-bezier(.15,.7,.3,1) both; box-shadow: 0 0 0 1px rgba(0,0,0,.35); }
   @keyframes apx { 0% { transform: translate(-50%,-50%) scale(1.3); opacity: 1; } 70% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 40px)) scale(.4); opacity: 0; } }
   .alert.big { animation-name: var(--ain, a-pop), bigglow !important; animation-duration: var(--adur-in, 600ms), 1.2s !important; animation-iteration-count: 1, infinite !important; }
   @keyframes bigglow { 50% { filter: brightness(1.18) drop-shadow(0 0 .35em var(--acol)); } }
-  .alert.l-mc-toast.big .sub { color: #FF55FF !important; }
-  .alert.l-mc-toast.big { box-shadow: inset 0 0 0 .1em #7a3fa0, inset .14em .14em 0 .1em #4a2a60, 0 0 1.2em rgba(170,0,255,.55) !important; }
 
   /* Splash-Text (wie im Minecraft-Hauptmenü) */
   .bb-splash { position: absolute; color: #FFFF55; font-size: calc(var(--px) * 8); text-shadow: var(--px) var(--px) 0 #3f3f00; white-space: nowrap;
@@ -313,15 +263,15 @@
   .qz.theme-dark .qz-tfill { background: linear-gradient(90deg, #9147ff, #bf94ff); }
   .qz.theme-dark .qz-pb { background: #9147ff; border-radius: .3em .3em 0 0; }
   .qz.theme-dark .qz-pts { color: #bf94ff; }
-  .qz-ecat { border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: grid; gap: 6px; margin-bottom: 8px; background: #0f0f16; }
+  .qz-ecat { border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: grid; gap: 6px; margin-bottom: 8px; background: var(--field); }
   .qz-erow { display: grid; grid-template-columns: 34px 1fr 1fr; gap: 4px; }
   .qz-erow .qz-ep { grid-row: span 2; color: #ffcc4d; font-weight: 800; font-size: 12px; padding-top: 8px; }
   .qz-erow input[data-qq$=":q"] { grid-column: 2 / 4; }
   .qz-erow input { font-size: 12px; padding: 5px 7px; }
   .ptype { border-top: 1px solid var(--line); padding-top: 8px; display: grid; gap: 6px; }
-  .ptprev { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; background: #0c0c12; border-radius: 10px; border: 1px solid var(--line); flex: none; }
+  .ptprev { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; background: var(--field); border-radius: 10px; border: 1px solid var(--line); flex: none; }
   .ptprev img { width: 26px; height: 26px; image-rendering: pixelated; }
-  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; background: #0c0c12; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; background: var(--field); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
   .gallery div { border-radius: 8px; padding: 4px 0; transition: background .15s; } .gallery div:hover { background: rgba(255,255,255,.04); }
   .gallery div { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--muted); text-align: center; }
   .gallery img { width: 32px; height: 32px; }
@@ -339,135 +289,135 @@
   @keyframes a-blur        { from { opacity:0; filter: blur(12px); } to { opacity:1; filter:none; } }
   @keyframes out-fade      { to { opacity:0; transform: translateX(-20px); } }
 
-  /* ================= EDITOR ================= */
+  /* ================= EDITOR (hell & schlicht) ================= */
   body.editor {
-    --bg: #0a0a0f; --panel: #111118; --card: #16161f; --card2: #1c1c27; --line: #262634; --line2: #33334a;
-    --text: #f1f0f7; --muted: #9a99ad; --faint: #6c6b80; --accent: #9b5cff; --accent2: #6f3cf6; --accent-soft: rgba(155,92,255,.14);
-    --ok: #3ddc97; --radius: 14px;
-    margin: 0; background: radial-gradient(1200px 600px at 85% -10%, rgba(111,60,246,.18), transparent 60%), var(--bg);
-    color: var(--text); font: 14px/1.5 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;
+    --bg: #f4f5f8; --panel: #ffffff; --card: #ffffff; --card2: #ffffff; --field: #f6f7f9; --line: #e3e5ea; --line2: #cfd3da;
+    --text: #1d1e24; --muted: #626875; --faint: #9aa0ab; --accent: #8a4dff; --accent2: #7438f0; --accent-soft: rgba(138,77,255,.10);
+    --ok: #16a34a; --radius: 12px;
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.5 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;
   }
-  body.editor ::selection { background: rgba(155,92,255,.4); }
-  body.editor * { scrollbar-width: thin; scrollbar-color: #33334a transparent; }
+  body.editor ::selection { background: rgba(138,77,255,.22); }
+  body.editor * { scrollbar-width: thin; scrollbar-color: #c9cdd5 transparent; }
   body.editor ::-webkit-scrollbar { width: 10px; height: 10px; }
-  body.editor ::-webkit-scrollbar-thumb { background: #2c2c3d; border-radius: 10px; border: 3px solid transparent; background-clip: padding-box; }
-  .ed { display: grid; grid-template-columns: minmax(340px, 460px) 1fr; height: 100vh; }
+  body.editor ::-webkit-scrollbar-thumb { background: #cfd3da; border-radius: 10px; border: 3px solid transparent; background-clip: padding-box; }
+  .ed { display: grid; grid-template-columns: minmax(360px, 440px) 1fr; height: 100vh; }
 
   /* --- Seitenleiste --- */
-  .side { background: linear-gradient(180deg, #13131b, #0f0f15); border-right: 1px solid var(--line); overflow-y: auto; display: flex; flex-direction: column; }
-  .brand { display: flex; align-items: center; gap: 12px; padding: 20px 20px 14px; }
-  .logo { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; flex: none;
-    background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: 0 6px 20px rgba(111,60,246,.45), inset 0 1px 0 rgba(255,255,255,.25); }
-  .side h1 { font-size: 17px; margin: 0; letter-spacing: -.01em; }
-  .side p.sub { margin: 1px 0 0; color: var(--muted); font-size: 12px; }
-  .tabwrap { position: sticky; top: 0; z-index: 5; padding: 8px 16px 12px; background: linear-gradient(180deg, rgba(17,17,24,.97) 70%, rgba(17,17,24,0)); backdrop-filter: blur(6px); }
-  .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: #0b0b11; padding: 4px; border-radius: 12px; border: 1px solid var(--line); }
-  .tabs button { background: transparent; color: var(--muted); padding: 9px 4px; font-size: 13px; border-radius: 9px; font-weight: 600; transition: background .15s, color .15s; }
-  .tabs button:hover { color: var(--text); background: rgba(255,255,255,.04); }
-  .tabs button.on { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 4px 14px rgba(111,60,246,.4); }
-  .side-body { padding: 0 16px 8px; flex: 1; }
-  .side-foot { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 16px 22px; border-top: 1px solid var(--line); margin-top: 8px; }
+  .side { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto; display: flex; flex-direction: column; }
+  .brand { display: flex; align-items: center; gap: 12px; padding: 20px 22px 12px; }
+  .logo { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; flex: none; background: var(--accent-soft); }
+  .side h1 { font-size: 16px; margin: 0; letter-spacing: -.01em; font-weight: 700; }
+  .side p.sub { margin: 0; color: var(--muted); font-size: 12px; }
+  .ver { font-size: 11px; color: var(--faint); margin-left: auto; align-self: flex-start; white-space: nowrap; }
+  .tabwrap { position: sticky; top: 0; z-index: 5; padding: 0 22px; background: var(--panel); border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+  .tabs { display: flex; gap: 2px; }
+  .tabs button { flex: 1; background: none; color: var(--muted); padding: 12px 4px 11px; font-size: 13.5px; border-radius: 0; font-weight: 600; border-bottom: 2px solid transparent; margin-bottom: -1px; box-shadow: none; }
+  .tabs button:hover { color: var(--text); background: none; filter: none; }
+  .tabs button.on { color: var(--accent2); border-bottom-color: var(--accent); background: none; box-shadow: none; }
+  .side-body { padding: 0 22px 8px; flex: 1; }
+  .side-foot { display: flex; gap: 8px; flex-wrap: wrap; padding: 14px 22px 22px; border-top: 1px solid var(--line); margin-top: 8px; }
 
-  /* --- Karten (Abschnitte) --- */
-  details { border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 10px; background: var(--card); transition: border-color .15s, box-shadow .15s; }
-  details:hover { border-color: var(--line2); }
-  details[open] { background: linear-gradient(180deg, var(--card2), var(--card) 120px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
-  summary { cursor: pointer; padding: 13px 16px; font-weight: 650; font-size: 14px; list-style: none; display: flex; align-items: center; gap: 8px; user-select: none; }
+  /* --- Abschnitte: immer nur einer offen --- */
+  details { border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 8px; background: var(--card); }
+  details[open] { border-color: var(--line2); box-shadow: 0 1px 2px rgba(16,24,40,.04), 0 4px 14px rgba(16,24,40,.05); }
+  summary { cursor: pointer; padding: 12px 16px; font-weight: 600; font-size: 14px; list-style: none; display: flex; align-items: center; gap: 8px; user-select: none; border-radius: var(--radius); }
+  summary:hover { background: var(--field); }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: ''; margin-left: auto; width: 8px; height: 8px; border-right: 2px solid var(--faint); border-bottom: 2px solid var(--faint); transform: rotate(-45deg); transition: transform .2s; }
+  summary::after { content: ''; margin-left: auto; width: 7px; height: 7px; border-right: 2px solid var(--faint); border-bottom: 2px solid var(--faint); transform: rotate(-45deg); transition: transform .2s; }
   details[open] > summary::after { transform: rotate(45deg); border-color: var(--accent); }
-  details[open] > summary { color: #fff; }
-  .grp { padding: 2px 16px 16px; display: grid; gap: 12px; }
-  .sect { display: flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: #c7b3ff; margin-top: 6px; }
-  .sect::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-  .sect::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  details[open] > summary { border-bottom: 1px solid var(--line); border-radius: var(--radius) var(--radius) 0 0; }
+  .grp { padding: 14px 16px 16px; display: grid; gap: 12px; }
+  .sect { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .grp > .sect:first-child, .grp > :is(label, div):first-child + .sect:nth-child(2) { margin-top: 0; }
 
   /* --- Felder --- */
-  label.f { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--muted); font-weight: 500; }
-  label.f.rng { display: grid; grid-template-columns: 1fr auto; align-items: center; row-gap: 4px; }
+  label.f { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; color: var(--muted); font-weight: 500; }
+  label.f.rng { display: grid; grid-template-columns: 1fr auto; align-items: center; row-gap: 2px; }
   label.f.rng input { grid-column: 1 / -1; }
-  .pill { font-size: 11.5px; color: var(--text); background: #0b0b11; border: 1px solid var(--line); padding: 1px 8px; border-radius: 999px; font-variant-numeric: tabular-nums; }
+  .pill { font-size: 12px; color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
   input[type=text], input[type=number], input[type=password], select, textarea {
-    background: #0c0c12; color: var(--text); border: 1px solid var(--line); border-radius: 10px;
-    padding: 9px 11px; font: inherit; font-size: 13.5px; width: 100%; transition: border-color .15s, box-shadow .15s; outline: none;
+    background: var(--panel); color: var(--text); border: 1px solid var(--line2); border-radius: 8px;
+    padding: 8px 10px; font: inherit; font-size: 13.5px; width: 100%; transition: border-color .15s, box-shadow .15s; outline: none;
   }
-  input[type=text]:hover, input[type=number]:hover, input[type=password]:hover, select:hover, textarea:hover { border-color: var(--line2); }
+  input[type=text]:hover, input[type=number]:hover, input[type=password]:hover, select:hover, textarea:hover { border-color: #b8bdc7; }
   input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
   input::placeholder, textarea::placeholder { color: var(--faint); }
-  select { appearance: none; -webkit-appearance: none; padding-right: 32px; cursor: pointer;
+  select { appearance: none; -webkit-appearance: none; padding-right: 30px; cursor: pointer;
     background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
-    background-position: calc(100% - 17px) 52%, calc(100% - 12px) 52%; background-size: 5px 5px; background-repeat: no-repeat; }
-  select option, select optgroup { background: #16161f; color: var(--text); }
+    background-position: calc(100% - 16px) 52%, calc(100% - 11px) 52%; background-size: 5px 5px; background-repeat: no-repeat; }
+  select option, select optgroup { background: #fff; color: var(--text); }
   textarea { min-height: 60px; resize: vertical; }
-  input[type=color] { -webkit-appearance: none; appearance: none; width: 34px; height: 34px; border: 2px solid var(--line2); border-radius: 50%; background: none; padding: 0; cursor: pointer; flex: none; overflow: hidden; }
+  input[type=color] { -webkit-appearance: none; appearance: none; width: 30px; height: 30px; border: 1px solid var(--line2); border-radius: 8px; background: none; padding: 2px; cursor: pointer; flex: none; overflow: hidden; }
   input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
-  input[type=color]::-webkit-color-swatch { border: 0; border-radius: 50%; }
-  input[type=color]::-moz-color-swatch { border: 0; border-radius: 50%; }
+  input[type=color]::-webkit-color-swatch { border: 0; border-radius: 5px; }
+  input[type=color]::-moz-color-swatch { border: 0; border-radius: 5px; }
   input[type=color]:hover { border-color: var(--accent); }
-  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 6px; background: #262634; outline: none; margin: 6px 0; cursor: pointer; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 4px solid var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,.5); transition: transform .1s; }
-  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-  input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 4px solid var(--accent); }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 4px; background: #e3e5ea; outline: none; margin: 8px 0; cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: 0 1px 3px rgba(16,24,40,.2); }
+  input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); }
   input[type=range]:focus { box-shadow: none; }
   /* Haken als Schalter */
   label.c { display: flex; gap: 10px; align-items: center; font-size: 13px; cursor: pointer; color: var(--text); }
-  label.c input[type=checkbox] { -webkit-appearance: none; appearance: none; flex: none; width: 34px; height: 20px; border-radius: 999px; background: #2a2a3a; position: relative; cursor: pointer; transition: background .2s; margin: 0; border: 0; }
-  label.c input[type=checkbox]::after { content: ''; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #cfcfe0; transition: transform .2s, background .2s; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
-  label.c input[type=checkbox]:checked { background: linear-gradient(135deg, var(--accent), var(--accent2)); }
-  label.c input[type=checkbox]:checked::after { transform: translateX(14px); background: #fff; }
+  label.c input[type=checkbox] { -webkit-appearance: none; appearance: none; flex: none; width: 32px; height: 18px; border-radius: 999px; background: #d5d8de; position: relative; cursor: pointer; transition: background .2s; margin: 0; border: 0; }
+  label.c input[type=checkbox]::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+  label.c input[type=checkbox]:checked { background: var(--accent); }
+  label.c input[type=checkbox]:checked::after { transform: translateX(14px); }
   label.c input[type=checkbox]:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
   input[type=checkbox] { accent-color: var(--accent); }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .inl { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .grp > .inl:has(input[type=color]), .row > .inl:has(input[type=color]), .row > div > .inl:has(input[type=color]) { background: #0c0c12; border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px 6px 6px; gap: 10px; }
   .inl .hint { color: var(--text); font-size: 12.5px; }
   .val { font-variant-numeric: tabular-nums; }
   .hint { color: var(--muted); font-size: 12px; line-height: 1.5; }
-  .hint code, .help code { background: #0b0b11; border: 1px solid var(--line); padding: 0 5px; border-radius: 5px; font-size: 11.5px; color: #d9cbff; }
-  .warn { color: #ffc27a; font-size: 12px; background: rgba(255,170,60,.08); border: 1px solid rgba(255,170,60,.25); padding: 8px 10px; border-radius: 10px; }
-  .dim { opacity: .4; transition: opacity .2s; }
+  .hint code, .help code { background: var(--field); border: 1px solid var(--line); padding: 0 5px; border-radius: 5px; font-size: 11.5px; color: #5b2fd0; }
+  .warn { color: #8a4b00; font-size: 12px; background: #fff7e8; border: 1px solid #f5d9a6; padding: 8px 10px; border-radius: 8px; }
+  .dim { opacity: .45; transition: opacity .2s; }
+  .dim:hover { opacity: .75; }
   .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .row3 .inl { flex-direction: column; align-items: center; background: #0c0c12; border: 1px solid var(--line); border-radius: 10px; padding: 8px 4px; gap: 4px; }
-  .dim:hover { opacity: .7; }
-  .intro { background: var(--accent-soft); border: 1px solid rgba(155,92,255,.3); color: #ddd0ff !important; border-radius: 12px; padding: 10px 12px; margin: 0 0 10px !important; }
+  .row3 .inl { flex-direction: column; align-items: center; background: var(--field); border: 1px solid var(--line); border-radius: 8px; padding: 8px 4px; gap: 4px; }
+  .intro { background: var(--accent-soft); border: 0; color: #4b2a99 !important; border-radius: 10px; padding: 10px 12px; margin: 0 0 12px !important; }
+  .gifpick { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; }
+  .gifpick .gp { padding: 0; background: var(--field); border: 1px solid var(--line); border-radius: 8px; aspect-ratio: 1; overflow: hidden; }
+  .gifpick .gp img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gifpick .gp:hover { border-color: var(--accent); }
 
   /* --- Knöpfe --- */
-  button { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: 0; border-radius: 10px; padding: 9px 16px; font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform .1s, filter .15s, background .15s, border-color .15s; }
-  button:hover { filter: brightness(1.12); }
+  button { background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background .15s, border-color .15s; }
+  button:hover { background: var(--accent2); }
   button:active { transform: translateY(1px); }
-  button.ghost { background: #1d1d29; border: 1px solid var(--line2); color: var(--text); }
-  button.ghost:hover { background: #262636; border-color: #45455f; filter: none; }
-  button.sm { padding: 6px 11px; font-size: 12px; border-radius: 8px; }
-  a.btn { border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+  button.ghost { background: var(--panel); border: 1px solid var(--line2); color: var(--text); }
+  button.ghost:hover { background: var(--field); border-color: #b8bdc7; }
+  button.sm { padding: 5px 10px; font-size: 12px; border-radius: 7px; }
+  a.btn { border-radius: 8px; background: var(--accent); }
 
   /* --- Rechte Seite --- */
   .main { display: flex; flex-direction: column; min-width: 0; overflow-y: auto; }
-  .topbar { padding: 18px 22px 14px; display: grid; gap: 12px; position: sticky; top: 0; z-index: 5; background: linear-gradient(180deg, rgba(10,10,15,.96) 75%, rgba(10,10,15,0)); backdrop-filter: blur(8px); }
-  .urlcard { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 12px 12px 16px; display: grid; gap: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
-  .urlcard .hint { font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; }
-  .urlcard .hint::before { content: '🔗'; }
-  .topbar .inl input[type=text], .topbar .inl input[type=password] { font-family: ui-monospace, 'JetBrains Mono', Consolas, monospace; font-size: 12px; flex: 1; min-width: 200px; width: auto; color: #cfc4ff; }
-  #copy { padding: 10px 20px; box-shadow: 0 6px 18px rgba(111,60,246,.4); }
+  .topbar { padding: 20px 26px 12px; display: grid; gap: 12px; position: sticky; top: 0; z-index: 5; background: var(--bg); }
+  .urlcard { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 12px 12px 16px; display: grid; gap: 8px; }
+  .urlcard .hint { font-weight: 600; color: var(--text); }
+  .topbar .inl input[type=text], .topbar .inl input[type=password] { font-family: ui-monospace, 'JetBrains Mono', Consolas, monospace; font-size: 12px; flex: 1; min-width: 200px; width: auto; color: var(--muted); background: var(--field); }
+  #copy { padding: 9px 20px; }
   .toolbar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
   .toolbar .inl { gap: 6px; }
-  .toolbar select { width: auto; padding-top: 6px; padding-bottom: 6px; font-size: 12.5px; }
+  .toolbar select { width: auto; padding-top: 5px; padding-bottom: 5px; font-size: 12.5px; }
   .tlabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); margin-right: 2px; }
-  .stage { flex: 1; position: relative; min-height: 480px; display: flex; flex-direction: column; align-items: center; padding: 6px 22px 22px; }
-  .win { width: min(100%, var(--pw, 420px)); flex: 1; display: flex; flex-direction: column; border-radius: 16px; overflow: hidden; border: 1px solid var(--line2); box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.02); min-height: 440px; }
-  .win-bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; background: #17171f; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); font-weight: 600; }
-  .win-bar i { width: 10px; height: 10px; border-radius: 50%; background: #3a3a4d; }
-  .win-bar i:nth-child(1) { background: #ff5f57; } .win-bar i:nth-child(2) { background: #febc2e; } .win-bar i:nth-child(3) { background: #28c840; }
-  .win-bar span { margin-left: 8px; } .win-bar .live { margin-left: auto; color: var(--ok); display: flex; align-items: center; gap: 6px; }
-  .win-bar .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); animation: ipulse 1.6s infinite; }
-  .stage .frame { flex: 1; position: relative; background: repeating-conic-gradient(#1b1b24 0 25%, #14141b 0 50%) 0 0/22px 22px; }
+  .stage { flex: 1; position: relative; min-height: 480px; display: flex; flex-direction: column; align-items: center; padding: 6px 26px 22px; }
+  .win { width: min(100%, var(--pw, 420px)); flex: 1; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; border: 1px solid var(--line2); background: #fff; box-shadow: 0 8px 30px rgba(16,24,40,.08); min-height: 440px; }
+  .win-bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #fff; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); font-weight: 600; }
+  .win-bar i { display: none; }
+  .win-bar .live { margin-left: auto; color: var(--ok); display: flex; align-items: center; gap: 6px; }
+  .win-bar .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); animation: livepulse 1.6s infinite; }
+  @keyframes livepulse { 50% { opacity: .35; } }
+  .stage .frame { flex: 1; position: relative; background: repeating-conic-gradient(#2a2c33 0 25%, #23252b 0 50%) 0 0/22px 22px; }
   .stage.bg-game .frame { background: linear-gradient(135deg, #2b5876, #4e4376); }
   .stage.bg-light .frame { background: #e9e9ee; }
   .stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .help { padding: 0 22px 28px; color: var(--muted); font-size: 13px; }
+  .help { padding: 0 26px 28px; color: var(--muted); font-size: 13px; }
   .help h3 { color: var(--text); font-size: 14px; margin: 0 0 10px; }
   .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 10px; }
-  .step { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; gap: 10px; line-height: 1.5; }
-  .step b.n { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; gap: 10px; line-height: 1.5; }
+  .step b.n { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; color: var(--accent2); background: var(--accent-soft); }
   .help b { color: var(--text); }
   [hidden] { display: none !important; }
   @media (max-width: 900px) { .ed { grid-template-columns: 1fr; height: auto; } .side { border-right: 0; border-bottom: 1px solid var(--line); } .main { overflow: visible; } .topbar { position: static; } }
@@ -541,13 +491,17 @@ function keyGroup(k) {
   if (SECRET_KEYS.includes(k)) return 'secret';
   if (/^m[A-Z]/.test(k)) return 'bar';
   if (/^q[A-Z]/.test(k)) return 'quiz';
-  if (/^(a[A-Z]|t[A-Z]|[ics]_)/.test(k)) return 'alerts';
+  if (/^(a[A-Z]|t[A-Z]|[icsg]_)/.test(k)) return 'alerts';
   return 'common';
 }
 
 const FONTS = ['Inter','Roboto','Poppins','Montserrat','Nunito','Lato','Open Sans','Rubik','Ubuntu','Fredoka','Baloo 2','Comfortaa','Quicksand','Bebas Neue','Oswald','Press Start 2P','VT323','Silkscreen','Pixelify Sans','Bangers','Permanent Marker','Lilita One','Luckiest Guy','Russo One','Orbitron','JetBrains Mono','Comic Neue'];
 const SYSTEM_FONTS = ['Arial','Segoe UI','Verdana','Tahoma','Trebuchet MS','Georgia','Impact','Comic Sans MS','Consolas'];
 
+// Eigene GIFs im Ordner gifs/ dieser Seite (Dateinamen hier eintragen)
+const APP_VERSION = '20.10.2026, 19:45';
+const GIF_BASE = 'gifs/';
+const MY_GIFS = [];
 const EVENT_STYLE = {
   sub:      { icon: '⭐', color: '#9147ff', label: 'Neues Abo' },
   resub:    { icon: '⭐', color: '#9147ff', label: 'Abo verlängert' },
@@ -563,25 +517,22 @@ const EVENT_STYLE = {
 // Pro Alert-Typ: Farbe (c_), Icon (i_), Sound-Link (s_) und das komplette Design (aXyz_typ)
 const ALERT_DESIGN = {
   aPos: 'center', aAlign: 'center', aAnim: 'pop', aOut: 'fade', aLen: 7,
-  aFont: '', aWeight: '', aShadow: '', aSize: 34,
-  aLayout: 'card', aWidth: 900, aPadding: 24, aRadius: 18, aBorderW: 3, aBorderMode: 'accent', aBorderCol: '#ffffff', aGlow: 60,
-  aBgType: 'solid', aBg: '#0e0e10', aBg2: '#3a0d5c', aBgAngle: 135, aBgImg: '', aBgAlpha: 85,
-  aIconShow: true, aIconSize: 1.7, aIconAnim: 'wobble', aGlint: true, aSlot: false, aParticles: true,
-  aToastText: 'Fortschritt erzielt!', aToastBig: 'Aufgabe gemeistert!',
+  aFont: '', aWeight: '', aShadow: 'outline', aSize: 34,
+  aGifH: 240, aParticles: false,
   aTitleColor: '#ffffff', aTitleScale: 100, aUpper: false, aNameMode: 'accent', aNameColor: '#ffd54f',
-  aSubShow: true, aSubColor: '#d0d0d8', aMsgShow: true, aMsgColor: '#ffffff', aMsgScale: 62, aBarShow: true,
+  aSubShow: true, aSubColor: '#d0d0d8', aMsgShow: true, aMsgColor: '#ffffff', aMsgScale: 62,
   aSound: 'chime', aVolume: 60,
 };
 const ALERT_KEYS = Object.keys(ALERT_DESIGN);
 for (const [t, st] of Object.entries(EVENT_STYLE)) {
-  DEFAULTS['c_' + t] = st.color; DEFAULTS['i_' + t] = st.icon; DEFAULTS['s_' + t] = '';
+  DEFAULTS['c_' + t] = st.color; DEFAULTS['i_' + t] = st.icon; DEFAULTS['s_' + t] = ''; DEFAULTS['g_' + t] = '';
   for (const K of ALERT_KEYS) DEFAULTS[K + '_' + t] = ALERT_DESIGN[K];
 }
 // Pro Balken: Farbe, Form, Schrift, Effekte
 const BAR_DESIGN = {
   Color: 'purple', Hex: '#b03ce6', Style: 'tex', Hex2: '#ff9ee6',
   Width: 182, Height: 5, Radius: 0, Notches: 10, Dir: 'fill',
-  Font: 'Pixelify Sans', Size: 3, TextSize: 100, TextColor: '#ffffff', TextShadow: '#3f3f3f',
+  Font: 'Minecraft (Original)', Size: 3, TextSize: 100, TextColor: '#ffffff', TextShadow: '#3f3f3f',
   IconPos: 'both', Shine: true, Aura: true, Ghost: true, Popups: true, CountUp: true,
 };
 for (let i = 1; i <= 4; i++) for (const [k, v] of Object.entries(BAR_DESIGN)) DEFAULTS[`mB${i}${k}`] = v;
@@ -616,6 +567,7 @@ function addLink(href) { const l = document.createElement('link'); l.rel = 'styl
 // Liefert den CSS-Font-Stack und lädt die Schrift bei Bedarf
 function fontStack(name, fileUrl) {
   name = (name || 'Inter').trim();
+  if (name === 'Minecraft (Original)') name = 'Minecraft';   // Ersatz, bis die Originalschrift geladen ist
   if (name === 'Eigene Schriftdatei') {
     if (!fileUrl) return "'Pixelify Sans', monospace";
     if (!loadedFonts.has('custom')) { loadedFonts.add('custom'); addCss(`@font-face { font-family: 'TCO Custom'; src: url("${String(fileUrl).replace(/"/g, '%22')}"); font-display: swap; }`); }
@@ -1378,22 +1330,9 @@ function startAlerts(cfg) {
   // Design des jeweiligen Alert-Typs
   const typeCfg = kind => Object.fromEntries(ALERT_KEYS.map(K => [K, cfg[K + '_' + kind] ?? ALERT_DESIGN[K]]));
   function styleAlert(el, c) {
-    const s = el.style, a = c.aBgAlpha / 100;
-    const bg = {
-      solid: hexA(c.aBg, a),
-      gradient: `linear-gradient(${c.aBgAngle}deg, ${hexA(c.aBg, a)}, ${hexA(c.aBg2, a)})`,
-      image: `center / cover no-repeat url("${String(c.aBgImg).replace(/"/g, '%22')}"), ${hexA(c.aBg, a)}`,
-      none: 'transparent',
-    }[c.aBgType] || hexA(c.aBg, a);
-    s.setProperty('--abg', bg);
+    const s = el.style;
     s.setProperty('--asize', c.aSize + 'px');
-    s.setProperty('--awidth', c.aWidth + 'px');
-    s.setProperty('--apad', c.aPadding + 'px');
-    s.setProperty('--aradius', c.aRadius + 'px');
-    s.setProperty('--abw', c.aBorderW + 'px');
-    if (c.aBorderMode === 'custom') s.setProperty('--abcol', c.aBorderCol);
-    s.setProperty('--aglowsize', (c.aGlow * 0.6) + 'px');
-    s.setProperty('--aicon', c.aIconSize + 'em');
+    s.setProperty('--agif', c.aGifH + 'px');
     s.setProperty('--atitle', c.aTitleColor);
     s.setProperty('--atscale', (c.aTitleScale / 100) + 'em');
     if (c.aNameMode === 'custom') s.setProperty('--aname', c.aNameColor);
@@ -1466,22 +1405,20 @@ function startAlerts(cfg) {
     box.classList.add('pos-' + c.aPos);
     if (c.aAlign !== 'center') box.classList.add('al-' + c.aAlign);
     const big = cfg.aBig && ((ev.kind === 'mass' && ev.amount >= 5) || ev.kind === 'raid' || (ev.kind === 'tip' && Number(ev.amount) >= cfg.aBigTip) || (ev.kind === 'bits' && ev.amount >= 1000));
-    if (c.aLayout === 'mc-toast' && ev.kind !== 'popup') tx.sub = big ? c.aToastBig : c.aToastText;
     const col = tx.color;
     const el = document.createElement('div');
-    el.className = `alert l-${c.aLayout} ta-${c.aAlign} ia-${c.aIconAnim} t-${ev.kind}` + (c.aUpper ? ' upper' : '') + (c.aGlint ? ' glinty' : '') + (c.aSlot ? ' slot' : '') + (big ? ' big' : '');
+    el.className = `alert ta-${c.aAlign} t-${ev.kind}` + (c.aUpper ? ' upper' : '') + (big ? ' big' : '');
     styleAlert(el, c);
     el.style.setProperty('--acol', col);
-    el.style.setProperty('--aglowcol', hexA(col, Math.min(1, c.aGlow / 100)));
     el.style.setProperty('--ain', 'a-' + c.aAnim);
     el.style.setProperty('--alen', c.aLen + 's');
+    const gif = String(cfg['g_' + ev.kind] || '').trim();
     const msg = c.aMsgShow && ev.message ? E.renderText(ev.message, ev.emotes, ev.kind === 'bits', cfg.mcCodes).html : '';
     el.innerHTML =
-      (c.aIconShow && tx.icon ? `<div class="icon">${iconHtml(tx.icon)}</div>` : '') +
+      (gif ? `<div class="gif"><img src="${esc(gif)}" alt=""></div>` : '') +
       `<div class="txt"><div class="title">${tx.title}</div>` +
       (c.aSubShow && tx.sub ? `<div class="sub">${esc(tx.sub)}</div>` : '') +
-      (msg ? `<div class="amsg">${msg}</div>` : '') + `</div>` +
-      (c.aBarShow ? `<div class="bar"></div>` : '');
+      (msg ? `<div class="amsg">${msg}</div>` : '') + `</div>`;
     box.appendChild(el);
     if (c.aParticles) setTimeout(() => particles(el, col, big, c), 250);
     if (big && !cfg['s_' + ev.kind] && c.aSound !== 'none') fanfare(c); else playSound(c, cfg['s_' + ev.kind]);
@@ -1499,10 +1436,10 @@ function startAlerts(cfg) {
 
   /* --- Pixel-Partikel rund ums Icon --- */
   function particles(el, col, big, c) {
-    const anchor = el.querySelector('.icon') || el;
+    const anchor = el.querySelector('.gif') || el;
     const r = anchor.getBoundingClientRect();
     const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-    const cols = c.aLayout.startsWith('mc') ? ['#55FF55', '#FFFF55', '#C8FF6B', '#FFFFFF', col] : [col, '#ffffff', '#ffd54f'];
+    const cols = [col, '#ffffff', '#ffd54f'];
     const n = big ? 46 : 22;
     for (let i = 0; i < n; i++) {
       const p = document.createElement('div');
@@ -1697,6 +1634,90 @@ function probeMcTextures(cb) {
   next();
 }
 
+/* ---------- Originale Minecraft-Schrift (Pixel für Pixel aus den Spieldateien) ---------- */
+const MCF = { ready: null, glyphs: new Map() };
+function loadMcFont() {
+  if (MCF.ready) return MCF.ready;
+  MCF.ready = new Promise(done => probeMcTextures(ok => {
+    if (!ok) return done(false);
+    const root = mcTexBase.replace(/textures\/$/, '');
+    fetch(root + 'font/include/default.json').then(r => r.json()).then(def => Promise.all(def.providers.filter(p => p.type === 'bitmap').map(p => new Promise((res, rej) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => res({ p, img }); img.onerror = rej;
+      img.src = mcTexBase + p.file.replace(/^minecraft:/, '');
+    })))).then(list => {
+      for (const { p, img } of list) {   // die erste Datei, die ein Zeichen hat, gewinnt (wie im Spiel)
+        const rows = p.chars, cw = img.width / [...rows[0]].length, ch = img.height / rows.length;
+        const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+        const x = c.getContext('2d'); x.drawImage(img, 0, 0);
+        const px = x.getImageData(0, 0, c.width, c.height).data;
+        const height = p.height || 8, ascent = p.ascent, scale = height / ch;
+        rows.forEach((row, ry) => [...row].forEach((chr, rx) => {
+          if (chr === '\u0000' || MCF.glyphs.has(chr)) return;
+          let w = 0;
+          for (let gx = cw - 1; gx >= 0 && !w; gx--) for (let gy = 0; gy < ch; gy++) if (px[((ry * ch + gy) * c.width + rx * cw + gx) * 4 + 3] > 0) { w = gx + 1; break; }
+          MCF.glyphs.set(chr, { c, sx: rx * cw, sy: ry * ch, cw, ch, scale, ascent, height, adv: Math.floor(0.5 + w * scale) + 1 });
+        }));
+      }
+      done(MCF.glyphs.size > 0);
+    }).catch(() => done(false));
+  }));
+  return MCF.ready;
+}
+// Zeichnet Text in der Originalschrift mit dem typischen Schatten (1 Pixel versetzt)
+function mcTextImage(text, color, shadow) {
+  const items = [];
+  let W = 0, top = 7, bot = 1;
+  for (const chr of [...text]) {
+    if (chr === ' ' || chr === ' ') { W += 4; continue; }
+    const g = MCF.glyphs.get(chr);
+    if (g) { items.push({ g, x: W }); W += g.adv; top = Math.max(top, g.ascent); bot = Math.max(bot, g.height - g.ascent); }
+    else if (!/[‍️]/.test(chr)) { items.push({ emoji: chr, x: W }); W += 10; }
+  }
+  W = Math.max(1, W + 1);
+  const H = top + bot + 1;
+  const mk = () => { const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); x.imageSmoothingEnabled = false; return [c, x]; };
+  const [mask, mx] = mk();
+  for (const { g, x } of items) if (g) mx.drawImage(g.c, g.sx, g.sy, g.cw, g.ch, x, top - g.ascent, g.cw * g.scale, g.ch * g.scale);
+  const tint = col => { const [t, tx] = mk(); tx.drawImage(mask, 0, 0); tx.globalCompositeOperation = 'source-in'; tx.fillStyle = col; tx.fillRect(0, 0, W, H); return t; };
+  const [out, ox] = mk();
+  ox.drawImage(tint(shadow), 1, 1); ox.drawImage(tint(color), 0, 0);
+  ox.font = '9px sans-serif'; ox.textBaseline = 'alphabetic';
+  for (const { emoji, x } of items) if (emoji) ox.fillText(emoji, x, top + 1);
+  return { url: out.toDataURL(), W, H, top };
+}
+function quarterColor(css) {   // Schattenfarbe wie im Spiel: Textfarbe mit 25 % Helligkeit
+  const m = String(css).match(/\d+(\.\d+)?/g) || [255, 255, 255];
+  return `rgb(${m.slice(0, 3).map(v => Math.floor(v / 4)).join(',')})`;
+}
+function useMcFont(root) {
+  const SEL = '[data-mcf] :is(.bb-text, .bb-float, .bb-splash, .bb-hype-text, .bb-top, .bb-ticker)';
+  let queued = false;
+  const paint = () => {
+    queued = false;
+    root.querySelectorAll(SEL).forEach(el => {
+      const text = el.textContent, cs = getComputedStyle(el), color = cs.color;
+      const key = text + '|' + color + '|' + cs.fontSize;
+      if (el.dataset.mct === key) return;
+      el.dataset.mct = key;
+      el.classList.add('mcf');
+      const k = parseFloat(cs.fontSize) / 8;
+      const sh = el.classList.contains('bb-text') ? (cs.getPropertyValue('--bts').trim() || quarterColor(color)) : quarterColor(color);
+      const img = mcTextImage(text, color, sh);
+      el.style.backgroundImage = `url("${img.url}")`;
+      el.style.width = img.W * k + 'px'; el.style.height = img.H * k + 'px';
+      el.style.lineHeight = img.H * k + 'px';
+    });
+  };
+  const later = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+  loadMcFont().then(ok => {
+    if (!ok) return;
+    new MutationObserver(later).observe(root, { subtree: true, childList: true, characterData: true });
+    later();
+  });
+}
+
 function startBar(cfg) {
   document.body.className = 'overlay';
   const wrap = document.createElement('div');
@@ -1754,6 +1775,7 @@ function startBar(cfg) {
       if (custom && /^#[0-9a-f]{6}$/i.test(P('Hex') || '')) es.setProperty('--tx-tint', P('Hex'));
     }
     if (cfg[`mB${i}Hide`]) b.el.querySelector('.bb-track').hidden = true;
+    if (P('Font') === 'Minecraft (Original)') b.el.dataset.mcf = '1';
     wrap.appendChild(b.el);
     bars.push(b);
   }
@@ -1784,6 +1806,8 @@ function startBar(cfg) {
   extra.className = 'bb-extra';
   extra.innerHTML = `<div class="bb-hype" hidden><div class="bb-hype-text"></div><div class="bb-hype-track"><div class="bb-hype-fill"></div></div></div><div class="bb-top" hidden></div><div class="bb-ticker" hidden></div>`;
   wrap.appendChild(extra);
+  if (cfg[`mB${firstOn}Font`] === 'Minecraft (Original)') extra.dataset.mcf = '1';
+  if (wrap.querySelector('[data-mcf]')) useMcFont(wrap);
 
   /* --- Speicher (bleibt in OBS erhalten) --- */
   const preview = cfg.demo || window.top !== window;
@@ -2562,8 +2586,8 @@ function startEditor() {
   if (!['chat', 'alerts', 'bar', 'quiz'].includes(tab)) tab = 'chat';
 
   const otherFonts = FONTS.filter(f => !PIXEL_FONTS.includes(f));
-  const fontOpts = `<optgroup label="Normale Schriften">${[...otherFonts, ...SYSTEM_FONTS].map(f => `<option>${f}</option>`).join('')}</optgroup><optgroup label="Pixel &amp; Minecraft">${[...PIXEL_FONTS, 'Eigene Schriftdatei'].map(f => `<option>${f}</option>`).join('')}</optgroup>`;
-  const pixelFonts = [...PIXEL_FONTS, 'Eigene Schriftdatei', ...otherFonts, ...SYSTEM_FONTS];
+  const fontOpts = `<optgroup label="Normale Schriften">${[...otherFonts, ...SYSTEM_FONTS].map(f => `<option>${f}</option>`).join('')}</optgroup><optgroup label="Pixel &amp; Minecraft">${PIXEL_FONTS.map(f => `<option>${f}</option>`).join('')}</optgroup>`;
+  const pixelFonts = ['Minecraft (Original)', ...PIXEL_FONTS, ...otherFonts, ...SYSTEM_FONTS];
   const animOpts = `
     <option value="slide-left">Von links reinsliden</option><option value="slide-right">Von rechts reinsliden</option>
     <option value="slide-up">Von unten reinsliden</option><option value="slide-down">Von oben reinsliden</option>
@@ -2594,18 +2618,13 @@ function startEditor() {
       <details ${t === 'sub' ? 'open' : ''} data-tab="alerts"><summary>${TYPE_EMOJI[t]} ${TYPE_LABEL[t]}</summary><div class="grp">
         <label class="c"><input type="checkbox" data-k="${TYPE_ON[t]}"> Diesen Alert anzeigen</label>
         ${TYPE_EXTRA[t] || ''}
-        <div class="sect">Text &amp; Icon</div>
+        <div class="sect">Text &amp; GIF</div>
         ${TYPE_TEXT[t] ? `<label class="f">Text<input type="text" data-k="${TYPE_TEXT[t]}"></label><div class="hint">Platzhalter: {name} {amount} {months} {recipient} {viewers} {tier}</div>` : ''}
-        <div class="inl"><span class="ptprev" data-prev="${t}"></span><input type="color" data-k="c_${t}"><span class="hint">Akzentfarbe</span></div>
-        <div class="row">
-          <label class="f">Minecraft-Item<select data-iconsel="${t}"><option value="">– kein Item –</option>${itemOpts}</select></label>
-          <label class="f">oder Emoji / Bild-Link<input type="text" data-k="i_${t}" placeholder="⭐ oder https://…gif"></label>
-        </div>
-        <label class="c"><input type="checkbox" data-k="${A('aIconShow')}"> Icon / Bild anzeigen</label>
-        ${range(A('aIconSize'), 'Icon-Größe', 0.5, 6, 0.1, '×')}
-        <label class="f">Icon-Bewegung<select data-k="${A('aIconAnim')}"><option value="item">⛏ Dreht sich wie ein fallengelassenes Item</option><option value="float">Schweben</option><option value="wobble">Wackeln</option><option value="bounce">Hüpfen</option><option value="spin">Drehen</option><option value="pulse">Pulsieren</option><option value="none">Keine</option></select></label>
-        <label class="c"><input type="checkbox" data-k="${A('aGlint')}"> ✨ Verzauberungs-Glanz auf Minecraft-Items</label>
-        <label class="c"><input type="checkbox" data-k="${A('aSlot')}"> Item in einem Inventar-Slot zeigen</label>
+        <div class="inl"><input type="color" data-k="c_${t}"><span class="hint">Akzentfarbe (Name, Partikel)</span></div>
+        <label class="f">GIF oder Bild (Link)<input type="text" data-k="g_${t}" placeholder="https://media.giphy.com/…gif"></label>
+        ${MY_GIFS.length ? `<div class="gifpick">${MY_GIFS.map(g => `<button type="button" class="gp" data-gif="${t}" data-src="${GIF_BASE}${g}" title="${esc(g)}"><img src="${GIF_BASE}${g}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+        <div class="hint">Bei Giphy oder Tenor: GIF öffnen → Rechtsklick aufs GIF → „Bildadresse kopieren“ → hier einfügen. Eigene GIFs schickst du Claude im Chat, dann erscheinen sie hier zum Anklicken. Leer = kein Bild.</div>
+        ${range(A('aGifH'), 'GIF-Höhe', 60, 700, 10, ' px')}
 
         <div class="sect">Schrift</div>
         <label class="f">Schriftart<select data-k="${A('aFont')}"><option value="">Wie im Chat</option>${fontOpts}</select></label>
@@ -2624,29 +2643,6 @@ function startEditor() {
         <label class="c"><input type="checkbox" data-k="${A('aMsgShow')}"> Nachricht des Zuschauers anzeigen</label>
         <div class="row">${color(A('aMsgColor'), 'Farbe der Nachricht')}</div>
         ${range(A('aMsgScale'), 'Größe der Nachricht', 30, 150, 5, '%')}
-
-        <div class="sect">Box &amp; Hintergrund</div>
-        <label class="f">Aufbau<select data-k="${A('aLayout')}">
-          <option value="card">Karte (Icon oben)</option><option value="banner">Banner (Icon links)</option>
-          <option value="imagetop">Großes Bild/GIF oben</option><option value="minimal">Nur Text, ohne Box</option>
-          <option value="mc-toast">⛏ Minecraft: „Fortschritt erzielt“-Popup</option><option value="mc-title">⛏ Minecraft: Großer Titel (/title)</option><option value="mc-tooltip">⛏ Minecraft: Item-Tooltip</option></select></label>
-        <div class="row" data-show="${A('aLayout')}=mc-toast">
-          <label class="f">Toast-Zeile<input type="text" data-k="${A('aToastText')}"></label>
-          <label class="f">… bei großen Events<input type="text" data-k="${A('aToastBig')}"></label>
-        </div>
-        <label class="f">Hintergrund<select data-k="${A('aBgType')}"><option value="solid">Eine Farbe</option><option value="gradient">Farbverlauf</option><option value="image">Bild / GIF</option><option value="none">Keiner</option></select></label>
-        <div class="row">${color(A('aBg'), 'Farbe 1')}<div data-show="${A('aBgType')}=gradient">${color(A('aBg2'), 'Farbe 2')}</div></div>
-        <div data-show="${A('aBgType')}=gradient">${range(A('aBgAngle'), 'Verlaufs-Winkel', 0, 360, 5, '°')}</div>
-        <label class="f" data-show="${A('aBgType')}=image">Bild-Link (auch GIF; lokal z. B. file:///C:/Stream/bg.gif)<input type="text" data-k="${A('aBgImg')}" placeholder="https://…"></label>
-        ${range(A('aBgAlpha'), 'Hintergrund-Deckkraft', 0, 100, 1, '%')}
-        ${range(A('aWidth'), 'Max. Breite', 300, 1800, 10, ' px')}
-        ${range(A('aPadding'), 'Innenabstand', 0, 80, 1, ' px')}
-        ${range(A('aRadius'), 'Ecken-Rundung', 0, 80, 1, ' px')}
-        ${range(A('aBorderW'), 'Rahmen-Dicke', 0, 16, 1, ' px')}
-        <label class="f">Rahmenfarbe<select data-k="${A('aBorderMode')}"><option value="accent">Akzentfarbe</option><option value="custom">Eigene Farbe</option></select></label>
-        <div data-show="${A('aBorderMode')}=custom">${color(A('aBorderCol'), 'Rahmenfarbe')}</div>
-        ${range(A('aGlow'), 'Leuchten', 0, 100, 1, '%')}
-        <label class="c"><input type="checkbox" data-k="${A('aBarShow')}"> Zeitbalken unten anzeigen</label>
 
         <div class="sect">Position &amp; Animation</div>
         <div class="row">
@@ -2668,13 +2664,12 @@ function startEditor() {
         <div class="inl" style="margin-top:6px"><button class="sm ghost" data-test="${t}">▶ Testen</button><button class="sm ghost" data-copyall="${t}">Dieses Design für alle Alerts übernehmen</button></div>
       </div></details>`; };
   const alertSections = Object.keys(EVENT_STYLE).map(alertSection).join('');
-  const itemGallery = `<div class="gallery">${Object.entries(MC_ICONS).map(([k, v]) => `<div title="mc:${k}"><img class="px" src="${mcIcon(k)}" alt=""><span>${v.de}</span></div>`).join('')}</div>`;
 
   document.body.innerHTML = `
   <div class="ed">
     <aside class="side">
       <div class="brand"><div class="logo">🎮</div><div><h1>Twitch Stream Overlay</h1>
-      <p class="sub">Chat · Alerts · Wither für OBS</p></div></div>
+      <p class="sub">Chat · Alerts · Wither für OBS</p></div><span class="ver" title="Stand dieser Version">Stand ${APP_VERSION}</span></div>
       <div class="tabwrap"><div class="tabs"><button data-tab-btn="chat">💬 Chat</button><button data-tab-btn="alerts">🔔 Alerts</button><button data-tab-btn="bar">💀 Wither</button><button data-tab-btn="quiz" id="quizTabBtn">🎯 Quiz</button></div></div>
       <div class="side-body">
 
@@ -2697,12 +2692,6 @@ function startEditor() {
         <div data-tab="chat">${range('stroke', 'Kontur', 0, 4, 0.5, ' px')}</div>
       </div></details>
 
-      <details data-tab="chat alerts bar quiz"><summary>🔤 Eigene Schriftdatei &amp; Minecraft-Extras</summary><div class="grp">
-        <div class="hint">Die Schrift „Minecraft“ wird automatisch aus dem Netz geladen. Willst du die <b>originale</b> Minecraft-Schrift oder eine andere Datei nutzen: Datei (.ttf/.otf/.woff) herunterladen, z. B. nach <code>C:\Stream\</code>, hier den Pfad eintragen und bei „Schrift“ <b>Eigene Schriftdatei</b> wählen.</div>
-        <label class="f">Link oder Pfad zur Schriftdatei<input type="text" data-k="fontFile" placeholder="file:///C:/Stream/minecraft.ttf"></label>
-        <label class="c"><input type="checkbox" data-k="mcCodes"> Minecraft-Farbcodes erlauben (<code>&amp;a</code> grün, <code>&amp;c</code> rot, <code>&amp;6</code> gold, <code>&amp;l</code> fett, <code>&amp;k</code> verschleiert …)</label>
-        <div class="hint">Gilt für Chat, Alert-Nachrichten, <code>!popup</code> und Quizfragen. Beispiel: <code>!popup &amp;6&amp;lGleich Pause!</code></div>
-      </div></details>
 
       <!-- ============ CHAT ============ -->
       <details data-tab="chat"><summary>Layout &amp; Hintergrund</summary><div class="grp">
@@ -2753,13 +2742,12 @@ function startEditor() {
       </div></details>
 
       <!-- ============ ALERTS ============ -->
-      <div class="hint intro" data-tab="alerts">Jeder Alert hat unten seine eigenen Einstellungen: Text, Icon, Schrift, Farben, Box, Animation und Sound. Klapp einfach den Alert auf, den du ändern willst.</div>
+      <div class="hint intro" data-tab="alerts">Jeder Alert hat unten seine eigenen Einstellungen: Text, GIF, Schrift, Farben, Animation und Sound. Klapp einfach den Alert auf, den du ändern willst.</div>
       ${alertSections}
 
-      <details data-tab="alerts"><summary>🎉 Große Events &amp; Item-Übersicht</summary><div class="grp">
+      <details data-tab="alerts"><summary>🎉 Große Events</summary><div class="grp">
         <label class="c"><input type="checkbox" data-k="aBig"> Große Events extra feiern (Raid, ab 5 Geschenk-Abos, ab 1.000 Bits, große Spende)</label>
         <label class="f">„Große Spende“ ab Betrag<input type="number" min="1" data-k="aBigTip"></label>
-        ${itemGallery}<div class="hint">Alle Minecraft-Items. Du kannst stattdessen auch ein Emoji oder einen Link zu einem Bild/GIF eintragen (z. B. von giphy.com oder file:///C:/Stream/sub.gif).</div>
       </div></details>
 
       <details data-tab="alerts"><summary>🗣️ Vorlesen, Wortfilter &amp; Befehle</summary><div class="grp">
@@ -3021,7 +3009,7 @@ function startEditor() {
         <div class="steps">
           <div class="step"><b class="n">1</b><div>Kanalname eintragen, alles einstellen und oben <b>Kopieren</b> klicken.</div></div>
           <div class="step"><b class="n">2</b><div>In OBS: Quellen → <b>+</b> → <b>Browser</b>. „Lokale Datei“ <b>nicht</b> anhaken und die URL ins Feld <b>URL</b> einfügen.</div></div>
-          <div class="step"><b class="n">3</b><div><b>Chat</b> z. B. 420 × 800, <b>Alerts</b> 1920 × 1080, <b>Wither</b> 1920 × 400, <b>Overlay</b> 1920 × 1080. Bei Sounds „Audio über OBS steuern“ anhaken.</div></div>
+          <div class="step"><b class="n">3</b><div><b>Chat</b> z. B. 420 × 800, <b>Alerts</b> 1920 × 1080, <b>Wither</b> 1920 × 400. Bei Sounds „Audio über OBS steuern“ anhaken.</div></div>
         </div>
         Chat, Alerts und Wither-Anzeige sind <b>getrennte Browser-Quellen</b> mit eigener URL (links umschalten).
         Wenn du etwas änderst, die neue URL in OBS einfügen. Die Wither-Anzeige merkt sich die Beträge in OBS, auch nach einem Neustart.
@@ -3084,7 +3072,19 @@ function startEditor() {
     if (k === 'qPoints') renderQuizEditor();
   }));
   document.querySelectorAll('[data-radio]').forEach(el => el.addEventListener('change', () => { state[el.dataset.radio] = el.value; update(); }));
-  document.querySelectorAll('[data-tab-btn]').forEach(b => b.onclick = () => { tab = b.dataset.tabBtn; setWidth(); update(); });
+  document.querySelectorAll('[data-tab-btn]').forEach(b => b.onclick = () => { tab = b.dataset.tabBtn; setWidth(); update(); tidySections(); });
+  /* --- Übersicht: im Reiter ist immer nur ein Abschnitt offen --- */
+  const sections = [...document.querySelectorAll('.side details')].filter(d => !d.parentElement.closest('details'));
+  function tidySections() {
+    const vis = sections.filter(d => !d.hidden);
+    const first = vis.find(d => d.open) || vis[0];
+    vis.forEach(d => { d.open = d === first; });
+  }
+  sections.forEach(d => d.addEventListener('toggle', () => {
+    if (!d.open) return;
+    sections.forEach(o => { if (o !== d && !o.hidden && o.open) o.open = false; });
+  }));
+  tidySections();
   document.querySelectorAll('[data-test]').forEach(b => b.onclick = () => {
     $('#pv').contentWindow && $('#pv').contentWindow.postMessage({ tco: 'test', kind: b.dataset.test }, '*');
   });
@@ -3111,6 +3111,13 @@ function startEditor() {
     for (const t of Object.keys(EVENT_STYLE)) if (t !== from) for (const K of ALERT_KEYS) state[K + '_' + t] = state[K + '_' + from];
     fill(); update();
     b.textContent = 'Übernommen ✓'; setTimeout(() => b.textContent = 'Dieses Design für alle Alerts übernehmen', 1800);
+  });
+  /* --- Eigene GIFs per Klick auswählen --- */
+  document.querySelectorAll('[data-gif]').forEach(b => b.onclick = () => {
+    const t = b.dataset.gif, url = new URL(b.dataset.src, baseUrl).href;
+    state['g_' + t] = url;
+    document.querySelectorAll(`[data-k="g_${t}"]`).forEach(o => o.value = url);
+    update();
   });
   /* --- Item-Auswahl pro Alert --- */
   document.querySelectorAll('[data-iconsel]').forEach(sel => sel.addEventListener('change', () => {
