@@ -5,7 +5,6 @@ Ein Overlay-Baukasten für OBS in einer einzigen Datei (`index.html`):
 - 💬 **Chat** mit 7TV-, BTTV- und FFZ-Emotes
 - 🔔 **Alerts** für Abos, Bits, Raids, Follows und Spenden, jeder Alert mit eigenem Design
 - 💀 **Wither-Anzeige** mit bis zu 4 Balken (Geld, Subs, Bits, Zuschauer, Bosskampf …)
-- 🎬 **Overlays**: komplette Szenen (Ingame, Just Chatting, Start, Pause, Ende) mit Kamera-Rahmen, Chat, Alerts und Infoleiste in verschiedenen Stilen
 
 ## Benutzen
 

@@ -126,6 +126,12 @@
   .bb.shine .bb-shine { display: block; }
   .bb-fill, .bb-ghost, .bb-notch { border-radius: calc(var(--px) * var(--brad, 0)); }
   .bb.noghost .bb-ghost { display: none; }
+  /* Original-Minecraft-Texturen (Bossleiste) */
+  .bb.st-tex .bb-track { background: none; background-image: var(--tx-bg); background-size: 100% 100%; background-repeat: no-repeat; box-shadow: none; border-radius: 0; }
+  .bb.st-tex .bb-fill { background: none; background-image: var(--tx-fg); background-size: calc(var(--px) * var(--bw, 182)) 100%; background-repeat: no-repeat; background-color: var(--tx-tint, transparent); background-blend-mode: multiply; border-radius: 0; }
+  .bb.st-tex .bb-notch { display: none; }
+  .bb.st-tex .bb-ghost { top: 0; bottom: 0; background: rgba(255,255,255,.55); }
+  .bb-skull.tex { display: inline-block; background-repeat: no-repeat; image-rendering: pixelated; }
   .bb.st-flat .bb-fill { background: var(--c2); }
   .bb.st-grad .bb-fill { background: linear-gradient(90deg, var(--c2), var(--g2)); }
   .bb.st-flat .bb-track, .bb.st-grad .bb-track { background: var(--e2); }
@@ -320,154 +326,6 @@
   .gallery div { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--muted); text-align: center; }
   .gallery img { width: 32px; height: 32px; }
 
-  /* ================= STREAM-OVERLAYS (Szenen) ================= */
-  #scene { position: fixed; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; font-family: var(--sfont); color: var(--c3); pointer-events: none; }
-  #scene * { box-sizing: border-box; }
-  .sc-bg { position: absolute; inset: 0; display: none; overflow: hidden; }
-  .sc-start .sc-bg, .sc-brb .sc-bg, .sc-end .sc-bg { display: block; }
-  .sc-bg i { position: absolute; display: block; }
-  .sc-cam { position: absolute; }
-  .sc-cam video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .sc-cam-demo { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 38%, #6b6f80 0 13%, transparent 13.5%), radial-gradient(ellipse at 50% 100%, #565a6a 0 34%, transparent 34.5%), linear-gradient(160deg, #2a2d38, #1a1c24); }
-  .sc-cam-demo span { position: absolute; bottom: 12%; font: 600 22px Inter, sans-serif; color: rgba(255,255,255,.55); }
-  .sc-cam-frame { position: absolute; inset: 0; }
-  .sc-cam .cn { position: absolute; display: none; }
-  .sc-cam-label { position: absolute; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
-  .sc-live { font-size: .62em; padding: .15em .55em; background: #e91916; color: #fff; letter-spacing: .08em; }
-  .sc-live::before { content: '● '; animation: scblink 1.4s infinite; }
-  @keyframes scblink { 50% { opacity: .2; } }
-  .sc-chat { position: absolute; display: flex; flex-direction: column; overflow: hidden; }
-  .sc-chat iframe { flex: 1; border: 0; width: 100%; background: transparent; }
-  .sc-chat-head { padding: 10px 18px; font-size: 26px; letter-spacing: .04em; }
-  .sc-alerts { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 10; }
-  .sc-bar { position: absolute; left: 36px; right: 36px; height: 60px; display: flex; align-items: center; gap: 22px; padding: 0 22px; font-size: 26px; white-space: nowrap; }
-  .bar-bottom .sc-bar { bottom: 24px; } .bar-top .sc-bar { top: 24px; }
-  .sc-brand { display: flex; align-items: center; gap: 12px; font-size: 30px; }
-  .sc-dot { width: 14px; height: 14px; border-radius: 50%; background: #e91916; box-shadow: 0 0 12px #e91916; animation: scblink 1.6s infinite; }
-  .sc-items { display: flex; gap: 14px; flex: 1; min-width: 0; overflow: hidden; }
-  .sc-item { display: flex; align-items: center; gap: 10px; padding: 4px 14px; min-width: 0; }
-  .sc-item .l { font-size: .62em; opacity: .75; text-transform: uppercase; letter-spacing: .06em; }
-  .sc-item b { overflow: hidden; text-overflow: ellipsis; max-width: 290px; }
-  .sc-item.pop { animation: scpop 1.2s ease-out; }
-  @keyframes scpop { 0% { transform: scale(1); } 15% { transform: scale(1.18); filter: brightness(1.8); } 100% { transform: scale(1); } }
-  .sc-social { font-size: .9em; opacity: .9; }
-  .sc-social.swap { animation: scswap .5s ease-out; }
-  @keyframes scswap { from { opacity: 0; transform: translateY(14px); } to { opacity: .9; transform: none; } }
-  .sc-clock { font-variant-numeric: tabular-nums; opacity: .85; }
-  .sc-hero { position: absolute; left: 50%; top: 46%; transform: translate(calc(-50% + var(--shift, 0px)), -50%); text-align: center; width: 1200px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
-  .sc-kicker { font-size: 34px; letter-spacing: .3em; text-transform: uppercase; opacity: .85; }
-  .sc-title { margin: 0; font-size: 150px; line-height: .95; font-weight: 700; }
-  .sc-sub { font-size: 40px; opacity: .9; }
-  .sc-count { margin-top: 20px; font-size: 120px; font-variant-numeric: tabular-nums; padding: 6px 48px; }
-  .sc-count.done { font-size: 70px; }
-  .sc-recap { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 26px; margin-top: 24px; font-size: 32px; max-width: 1100px; }
-  .sc-recap-h { width: 100%; font-size: 24px; letter-spacing: .25em; text-transform: uppercase; opacity: .7; }
-
-  /* --- Stil: Battle Royale (Fortnite-artig): knallig, schräg, Blau-Lila mit Gelb --- */
-  .th-br .sc-bg { background: radial-gradient(1200px 800px at 50% 110%, var(--c2), transparent 70%), linear-gradient(160deg, #0b2a8f, var(--c1) 55%, #6a1fd1); }
-  .th-br .sc-bg .d1 { inset: -50%; background: repeating-conic-gradient(from 0deg at 50% 60%, rgba(255,255,255,.07) 0 6deg, transparent 6deg 18deg); animation: scspin 60s linear infinite; }
-  .th-br .sc-bg .d2 { left: 50%; top: 60%; width: 1500px; height: 1500px; margin: -750px; border-radius: 50%; border: 18px solid rgba(190,90,255,.55); box-shadow: 0 0 120px rgba(190,90,255,.8), inset 0 0 120px rgba(190,90,255,.6); animation: scstorm 9s ease-in-out infinite; }
-  @keyframes scspin { to { transform: rotate(360deg); } }
-  @keyframes scstorm { 50% { transform: scale(.82); } }
-  .th-br .sc-cam-frame { border: 8px solid #fff; border-radius: 22px; box-shadow: 0 0 0 4px var(--c1), 0 12px 40px rgba(0,0,0,.45), 0 0 50px color-mix(in srgb, var(--c2) 70%, transparent); }
-  .th-br .sc-cam { border-radius: 22px; overflow: visible; }
-  .th-br .sc-cam video, .th-br .sc-cam-demo { border-radius: 22px; }
-  .th-br .sc-cam-label { left: 24px; top: -30px; font-size: 40px; padding: 4px 26px; background: linear-gradient(90deg, var(--c3), #ffb01f); color: #1a1240; transform: skewX(-12deg); box-shadow: 0 6px 0 rgba(0,0,0,.35); text-transform: uppercase; }
-  .th-br .sc-cam-label > * { transform: skewX(12deg); }
-  .th-br .sc-chat { background: linear-gradient(180deg, rgba(20,30,110,.82), rgba(70,20,140,.82)); border: 5px solid #fff; border-radius: 22px; box-shadow: 0 0 0 3px var(--c1), 0 12px 40px rgba(0,0,0,.45); }
-  .th-br .sc-chat-head { background: linear-gradient(90deg, var(--c1), var(--c2)); color: #fff; text-transform: uppercase; font-size: 30px; }
-  .th-br .sc-bar { background: linear-gradient(90deg, rgba(10,30,120,.92), rgba(80,25,160,.92)); border: 4px solid #fff; border-radius: 16px; transform: skewX(-8deg); box-shadow: 0 8px 0 rgba(0,0,0,.3); text-transform: uppercase; }
-  .th-br .sc-bar > * { transform: skewX(8deg); }
-  .th-br .sc-item { border-radius: 10px; background: linear-gradient(180deg, #ff9f2e, #c2560c); }
-  .th-br .sc-item[data-item="follow"] { background: linear-gradient(180deg, #c76bff, #7a22c9); }
-  .th-br .sc-item[data-item="tip"] { background: linear-gradient(180deg, #3ad16b, #16823a); }
-  .th-br .sc-item[data-item="bits"] { background: linear-gradient(180deg, #3fb6ff, #1a62c9); }
-  .th-br .sc-title { color: #fff; text-transform: uppercase; font-weight: 400; transform: skewX(-8deg) rotate(-2deg); text-shadow: 0 8px 0 #1a1240, 0 0 60px var(--c2); -webkit-text-stroke: 4px #1a1240; }
-  .th-br .sc-kicker { color: var(--c3); }
-  .th-br .sc-count { background: var(--c3); color: #1a1240; border-radius: 22px; transform: skewX(-8deg); box-shadow: 0 10px 0 rgba(0,0,0,.35); }
-  .th-br .sc-recap span { background: rgba(255,255,255,.15); border: 3px solid #fff; border-radius: 14px; padding: 4px 18px; }
-
-  /* --- Stil: Legends (Apex-artig): dunkel, eckig, Rot --- */
-  .th-apex { --cut: polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 26px 100%, 0 calc(100% - 26px)); }
-  .th-apex .sc-bg { background: linear-gradient(135deg, #1b1b1f, var(--c2) 60%, #0a0a0b); }
-  .th-apex .sc-bg .d1 { inset: 0; background: repeating-linear-gradient(115deg, rgba(255,255,255,.035) 0 2px, transparent 2px 46px); }
-  .th-apex .sc-bg .d2 { right: -300px; top: -200px; width: 900px; height: 1500px; background: linear-gradient(180deg, var(--c1), #6d0d10); transform: skewX(-20deg); opacity: .85; box-shadow: 0 0 120px rgba(227,38,43,.5); }
-  .th-apex .sc-bg .d3 { left: -200px; bottom: -120px; width: 700px; height: 260px; background: rgba(227,38,43,.25); transform: skewX(-20deg); }
-  .th-apex .sc-cam-frame { border: 4px solid var(--c1); clip-path: var(--cut); box-shadow: inset 0 0 0 2px rgba(255,255,255,.15); }
-  .th-apex .sc-cam video, .th-apex .sc-cam-demo { clip-path: var(--cut); }
-  .th-apex .sc-cam .cn { display: block; width: 46px; height: 46px; border: 6px solid var(--c3); }
-  .th-apex .sc-cam .tl { left: -12px; top: -12px; border-right: 0; border-bottom: 0; }
-  .th-apex .sc-cam .br { right: -12px; bottom: -12px; border-left: 0; border-top: 0; }
-  .th-apex .sc-cam-label { left: 0; top: -46px; font-size: 40px; padding: 0 20px 0 14px; height: 46px; background: var(--c1); color: #fff; text-transform: uppercase; letter-spacing: .06em; clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%); }
-  .th-apex .sc-live { background: #111; }
-  .th-apex .sc-chat { background: rgba(14,14,16,.86); clip-path: var(--cut); border-left: 6px solid var(--c1); }
-  .th-apex .sc-chat-head { background: linear-gradient(90deg, var(--c1), transparent); color: #fff; text-transform: uppercase; letter-spacing: .1em; font-size: 34px; }
-  .th-apex .sc-bar { background: rgba(14,14,16,.9); clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%); border-left: 10px solid var(--c1); text-transform: uppercase; letter-spacing: .05em; font-size: 30px; }
-  .th-apex .sc-item { border-left: 3px solid var(--c1); background: rgba(255,255,255,.05); }
-  .th-apex .sc-item .l { color: var(--c1); opacity: 1; }
-  .th-apex .sc-title { text-transform: uppercase; font-size: 190px; letter-spacing: .02em; color: var(--c3); text-shadow: 8px 8px 0 var(--c1); }
-  .th-apex .sc-kicker { color: var(--c1); font-weight: 600; }
-  .th-apex .sc-count { background: var(--c1); color: #fff; clip-path: polygon(20px 0, 100% 0, calc(100% - 20px) 100%, 0 100%); padding: 0 70px; }
-  .th-apex .sc-recap span { border-bottom: 4px solid var(--c1); padding: 0 6px; text-transform: uppercase; }
-
-  /* --- Stil: Raider (Arc-Raiders-artig): Retro-Sci-Fi, Creme, Orange, Petrol --- */
-  .th-arc .sc-bg { background: radial-gradient(1000px 700px at 75% 20%, rgba(255,122,26,.28), transparent 60%), linear-gradient(180deg, #1d4644, var(--c2) 60%, #0b1c1b); }
-  .th-arc .sc-bg .d1 { inset: 0; background-image: radial-gradient(rgba(241,230,207,.16) 1.5px, transparent 1.5px); background-size: 34px 34px; }
-  .th-arc .sc-bg .d2 { left: 50%; top: 104%; width: 2600px; height: 900px; margin-left: -1300px; border-radius: 50%; background: linear-gradient(180deg, #ff9a3c, #c2410c 40%, transparent 70%); opacity: .5; filter: blur(30px); }
-  .th-arc .sc-bg .d3 { left: 0; right: 0; top: 50%; height: 4px; background: repeating-linear-gradient(90deg, rgba(241,230,207,.25) 0 30px, transparent 30px 60px); animation: scscan 6s linear infinite; }
-  @keyframes scscan { 0% { top: 0; } 100% { top: 100%; } }
-  .th-arc .sc-cam-frame { border: 5px solid var(--c3); border-radius: 14px; box-shadow: 0 0 0 10px rgba(20,48,47,.85), 0 0 0 13px var(--c1); }
-  .th-arc .sc-cam video, .th-arc .sc-cam-demo { border-radius: 14px; }
-  .th-arc .sc-cam-label { right: 0; bottom: -58px; font-size: 30px; font-weight: 700; padding: 4px 18px; background: var(--c3); color: var(--c2); border-radius: 0 0 10px 10px; letter-spacing: .14em; text-transform: uppercase; }
-  .th-arc .sc-cam-label b::before { content: '// '; color: var(--c1); }
-  .th-arc .sc-live { background: var(--c1); color: var(--c2); }
-  .th-arc .sc-chat { background: rgba(14,36,35,.88); border: 3px solid var(--c3); border-radius: 14px; box-shadow: 0 0 0 8px rgba(20,48,47,.6); }
-  .th-arc .sc-chat-head { background: var(--c3); color: var(--c2); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; font-size: 24px; }
-  .th-arc .sc-chat-head::after { content: ' ▮▮▯'; color: var(--c1); }
-  .th-arc .sc-bar { background: var(--c3); color: var(--c2); border-radius: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; box-shadow: 0 0 0 4px var(--c2), 0 0 0 7px var(--c1); }
-  .th-arc .sc-item { border: 2px dashed rgba(20,48,47,.35); border-radius: 8px; }
-  .th-arc .sc-item .l { color: var(--c1); opacity: 1; font-weight: 700; }
-  .th-arc .sc-dot { background: var(--c1); box-shadow: 0 0 10px var(--c1); }
-  .th-arc .sc-title { text-transform: uppercase; letter-spacing: .08em; color: var(--c3); font-size: 140px; text-shadow: 0 0 40px rgba(255,122,26,.45); }
-  .th-arc .sc-kicker { color: var(--c1); font-weight: 700; }
-  .th-arc .sc-kicker::before { content: '◢ '; } .th-arc .sc-kicker::after { content: ' ◣'; }
-  .th-arc .sc-count { border: 4px solid var(--c1); color: var(--c3); border-radius: 18px; background: rgba(20,48,47,.7); letter-spacing: .1em; }
-  .th-arc .sc-recap span { background: var(--c3); color: var(--c2); padding: 2px 16px; border-radius: 8px; font-weight: 700; }
-
-  /* --- Stil: Modern & schlicht --- */
-  .th-clean .sc-bg { background: radial-gradient(900px 600px at 20% 10%, color-mix(in srgb, var(--c1) 45%, transparent), transparent 60%), radial-gradient(900px 700px at 90% 90%, color-mix(in srgb, var(--c1) 30%, transparent), transparent 60%), var(--c2); }
-  .th-clean .sc-bg .d1 { left: 15%; top: 20%; width: 500px; height: 500px; border-radius: 50%; background: var(--c1); filter: blur(140px); opacity: .5; animation: scfloat 12s ease-in-out infinite; }
-  @keyframes scfloat { 50% { transform: translate(400px, 200px); } }
-  .th-clean .sc-cam-frame { border-radius: 24px; border: 3px solid rgba(255,255,255,.25); box-shadow: 0 20px 60px rgba(0,0,0,.45), 0 0 0 1px color-mix(in srgb, var(--c1) 60%, transparent); }
-  .th-clean .sc-cam video, .th-clean .sc-cam-demo { border-radius: 24px; }
-  .th-clean .sc-cam-label { left: 20px; bottom: 20px; font-size: 26px; font-weight: 700; padding: 8px 18px; background: rgba(10,10,15,.65); backdrop-filter: blur(10px); border-radius: 12px; }
-  .th-clean .sc-live { border-radius: 6px; }
-  .th-clean .sc-chat { background: rgba(12,12,18,.72); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.12); border-radius: 24px; }
-  .th-clean .sc-chat-head { font-size: 22px; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,.08); }
-  .th-clean .sc-bar { background: rgba(12,12,18,.75); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.12); border-radius: 18px; font-size: 24px; }
-  .th-clean .sc-item { background: rgba(255,255,255,.06); border-radius: 10px; }
-  .th-clean .sc-item .l { color: var(--c1); opacity: 1; filter: brightness(1.4); }
-  .th-clean .sc-title { font-size: 130px; font-weight: 800; letter-spacing: -.03em; }
-  .th-clean .sc-kicker { color: var(--c1); filter: brightness(1.5); font-weight: 700; font-size: 26px; }
-  .th-clean .sc-count { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 24px; font-weight: 800; }
-  .th-clean .sc-recap span { background: rgba(255,255,255,.08); border-radius: 999px; padding: 4px 20px; }
-
-  /* --- Stil: Minecraft --- */
-  .th-mc .sc-bg { background: linear-gradient(180deg, #7aa7ff 0 55%, #5d9b3a 55% 58%, #866043 58% 100%); image-rendering: pixelated; }
-  .th-mc .sc-bg .d1 { left: 0; right: 0; top: 58%; bottom: 0; background-image: linear-gradient(45deg, rgba(0,0,0,.12) 25%, transparent 25% 75%, rgba(0,0,0,.12) 75%), linear-gradient(45deg, rgba(0,0,0,.12) 25%, transparent 25% 75%, rgba(0,0,0,.12) 75%); background-size: 48px 48px; background-position: 0 0, 24px 24px; }
-  .th-mc .sc-bg .d2 { left: 10%; top: 12%; width: 360px; height: 60px; background: #fff; box-shadow: 60px -40px 0 #fff, 180px 30px 0 #fff, 1100px 60px 0 #fff, 1200px 20px 0 #fff; animation: scclouds 80s linear infinite; }
-  @keyframes scclouds { to { transform: translateX(600px); } }
-  .th-mc .sc-cam-frame { border: 8px solid #c6c6c6; box-shadow: inset 4px 4px 0 #555, inset -4px -4px 0 #fff, 0 0 0 4px #000; }
-  .th-mc .sc-cam-label { left: 50%; top: -38px; transform: translateX(-50%); font-size: 30px; color: #fff; text-shadow: 3px 3px 0 #3f3f3f; background: rgba(0,0,0,.45); padding: 2px 14px; }
-  .th-mc .sc-live { background: #aa0000; }
-  .th-mc .sc-chat { background: rgba(0,0,0,.55); border: 6px solid #c6c6c6; box-shadow: inset 3px 3px 0 #555, 0 0 0 3px #000; }
-  .th-mc .sc-chat-head { color: #ffff55; text-shadow: 3px 3px 0 #3f3f00; }
-  .th-mc .sc-bar { background: #c6c6c6; color: #3f3f3f; box-shadow: inset 4px 4px 0 #fff, inset -4px -4px 0 #555, 0 0 0 4px #000; }
-  .th-mc .sc-item { background: #8b8b8b; color: #fff; text-shadow: 2px 2px 0 #3f3f3f; box-shadow: inset 3px 3px 0 #373737, inset -3px -3px 0 #fff; }
-  .th-mc .sc-title { color: #fff; font-size: 120px; font-weight: 400; text-shadow: 10px 10px 0 #3f3f3f; }
-  .th-mc .sc-sub { color: #ffff55; text-shadow: 4px 4px 0 #3f3f00; }
-  .th-mc .sc-count { background: #c6c6c6; color: #3f3f3f; box-shadow: inset 5px 5px 0 #fff, inset -5px -5px 0 #555, 0 0 0 4px #000; }
-  .th-mc .sc-recap span { color: #ffff55; text-shadow: 3px 3px 0 #3f3f00; }
   /* ================= Animationen ================= */
   @keyframes a-slide-left  { from { opacity:0; transform: translateX(-110%); } to { opacity:1; transform:none; } }
   @keyframes a-slide-right { from { opacity:0; transform: translateX(110%); }  to { opacity:1; transform:none; } }
@@ -570,15 +428,6 @@
   .dim { opacity: .4; transition: opacity .2s; }
   .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .row3 .inl { flex-direction: column; align-items: center; background: #0c0c12; border: 1px solid var(--line); border-radius: 10px; padding: 8px 4px; gap: 4px; }
-  .scpick { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .scpick label { position: relative; background: #0c0c12; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; font-size: 13px; font-weight: 600; transition: border-color .15s, background .15s; }
-  .scpick label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
-  .scpick input { position: absolute; opacity: 0; pointer-events: none; }
-  .camfit { background: #0c0c12; border: 1px dashed var(--line2); border-radius: 12px; padding: 10px 12px; font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
-  .camfit > b { color: var(--text); font-size: 12.5px; }
-  .camvals { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
-  .camvals span { background: var(--accent-soft); border: 1px solid rgba(155,92,255,.3); color: #ddd0ff; border-radius: 8px; padding: 2px 8px; }
-  .camvals b { color: #fff; }
   .dim:hover { opacity: .7; }
   .intro { background: var(--accent-soft); border: 1px solid rgba(155,92,255,.3); color: #ddd0ff !important; border-radius: 12px; padding: 10px 12px; margin: 0 0 10px !important; }
 
@@ -683,13 +532,6 @@ const DEFAULTS = {
   qTitle: '⛏ Stream-Quiz', qTheme: 'mc', qFont: 'Minecraft', qSize: 28, qPoints: '5, 10, 20, 50, 100', qTime: 30,
   qChat: true, qOneTry: true, qFuzzy: true, qAutoBack: 8, qLeader: true, qSound: true, qVolume: 60, qCmd: '!quiz', qBoard: '',
   mSub1: 2.5, mSub2: 5, mSub3: 12.5, mPrime: 2.5, mBit: 0.01, mTips: true, mCmd: '!bar',
-  // Stream-Overlays (Szenen)
-  sScene: 'game', sTheme: 'br', sColors: 'theme', sC1: '#2f7bff', sC2: '#b84dff', sC3: '#ffd23f', sFont: '',
-  sCam: true, sCamPos: 'br', sCamW: 520, sCamShape: 'rect', sCamName: true, sCamLabel: '', sLive: true, sCamLive: false, sCamFull: false,
-  sChat: true, sChatPos: 'right', sChatW: 440, sChatH: 1080, sAlerts: true,
-  sBar: 'bottom', sBrand: '', sBSub: true, sBFollow: true, sBTip: true, sBBits: true, sClock: true, sSocials: '',
-  sStartTitle: 'Stream startet gleich', sStartSub: 'Hol dir was zu trinken – gleich geht’s los!', sCountdown: 5, sCountEnd: 'Gleich geht’s los!',
-  sBrbTitle: 'Gleich zurück', sBrbSub: 'Kurze Pause – nicht weggehen!', sEndTitle: 'Danke fürs Zuschauen!', sEndSub: 'Bis zum nächsten Stream 👋',
   // Spenden-Plattformen
   // Spenden-Plattformen
   seToken: '', slToken: '',
@@ -699,7 +541,6 @@ function keyGroup(k) {
   if (SECRET_KEYS.includes(k)) return 'secret';
   if (/^m[A-Z]/.test(k)) return 'bar';
   if (/^q[A-Z]/.test(k)) return 'quiz';
-  if (/^s[A-Z]/.test(k)) return 'scene';
   if (/^(a[A-Z]|t[A-Z]|[ics]_)/.test(k)) return 'alerts';
   return 'common';
 }
@@ -738,7 +579,7 @@ for (const [t, st] of Object.entries(EVENT_STYLE)) {
 }
 // Pro Balken: Farbe, Form, Schrift, Effekte
 const BAR_DESIGN = {
-  Color: 'purple', Hex: '#b03ce6', Style: 'pixel', Hex2: '#ff9ee6',
+  Color: 'purple', Hex: '#b03ce6', Style: 'tex', Hex2: '#ff9ee6',
   Width: 182, Height: 5, Radius: 0, Notches: 10, Dir: 'fill',
   Font: 'Pixelify Sans', Size: 3, TextSize: 100, TextColor: '#ffffff', TextShadow: '#3f3f3f',
   IconPos: 'both', Shine: true, Aura: true, Ghost: true, Popups: true, CountUp: true,
@@ -1048,7 +889,7 @@ function configToHash(cfg, mode, extra = {}) {
   if (mode && mode !== 'chat') p.set('mode', mode);
   for (const k of Object.keys(DEFAULTS)) {
     const g = keyGroup(k);
-    if (!(g === 'common' || g === mode || (g === 'secret' && mode !== 'chat') || (mode === 'scene' && g === 'alerts'))) continue;
+    if (!(g === 'common' || g === mode || (g === 'secret' && mode !== 'chat'))) continue;
     const v = cfg[k];
     if (v === DEFAULTS[k] && k !== 'channel') continue;
     p.set(k, typeof v === 'boolean' ? (v ? '1' : '0') : String(v));
@@ -1820,6 +1661,42 @@ const BAR_AUTO_ICON = { money: 'emerald', rolling: 'clock', avg: 'clock', subs: 
 const LIVE_PATHS = { followers: 'followcount', viewers: 'viewercount', subs: 'subcount' };
 const DECAPI_SUB_AUTH = 'https://decapi.me/auth/twitch?redirect=subcount&scopes=channel:read:subscriptions';
 
+/* ---------- Original-Minecraft-Texturen (werden aus dem Netz geladen) ---------- */
+const MC_TEX_SOURCES = [
+  'https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21.4/assets/minecraft/textures/',
+  'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/',
+];
+// Item-Symbole: Datei und (bei Mob-Köpfen) Ausschnitt [x, y, w, h, Bildbreite, Bildhöhe]
+const MC_TEX_ICONS = {
+  diamond: 'item/diamond.png', emerald: 'item/emerald.png', heart: 'gui/sprites/hud/heart/full.png', netherstar: 'item/nether_star.png',
+  cake: 'item/cake.png', tnt: 'block/tnt_side.png', apple: 'item/golden_apple.png', gold: 'item/gold_ingot.png',
+  sword: 'item/diamond_sword.png', pickaxe: 'item/diamond_pickaxe.png', pearl: 'item/ender_pearl.png',
+  xpbottle: 'item/experience_bottle.png', rocket: 'item/firework_rocket.png', cookie: 'item/cookie.png', torch: 'block/torch.png',
+  disc: 'item/music_disc_cat.png', book: 'item/book.png', clock: 'item/clock_00.png',
+  creeper: ['entity/creeper/creeper.png', 8, 8, 8, 8, 64, 32],
+  wither: ['entity/wither/wither.png', 8, 8, 8, 8, 64, 64],
+};
+let mcTexBase = MC_TEX_SOURCES[0];
+function mcTexIconStyle(name) {
+  const t = MC_TEX_ICONS[name];
+  if (!t) return null;
+  if (typeof t === 'string') return { file: t, css: 'background-size:100% 100%' };
+  const [file, x, y, w, h, W, H] = t;
+  return { file, css: `background-size:${W / w * 100}% ${H / h * 100}%;background-position:${W === w ? 0 : x / (W - w) * 100}% ${H === h ? 0 : y / (H - h) * 100}%` };
+}
+// Prüft, welche Quelle erreichbar ist; ruft cb(true) oder cb(false) (gar keine erreichbar)
+function probeMcTextures(cb) {
+  let i = 0;
+  const next = () => {
+    if (i >= MC_TEX_SOURCES.length) return cb(false);
+    const base = MC_TEX_SOURCES[i++], img = new Image();
+    img.onload = () => { mcTexBase = base; cb(true); };
+    img.onerror = next;
+    img.src = base + 'gui/sprites/boss_bar/purple_progress.png';
+  };
+  next();
+}
+
 function startBar(cfg) {
   document.body.className = 'overlay';
   const wrap = document.createElement('div');
@@ -1861,14 +1738,39 @@ function startBar(cfg) {
     es.setProperty('--g2', P('Hex2'));
     const iconName = cfg[`mB${i}Icon`] === 'auto' ? (b.metric === 'boss' ? 'wither' : BAR_AUTO_ICON[b.m.key] || 'xp') : cfg[`mB${i}Icon`];
     const ip = P('IconPos');
-    const skull = ip !== 'none' && iconName !== 'none' && mcIcon(iconName) ? `<img class="bb-skull" src="${mcIcon(iconName)}" alt="">` : '';
+    const texIcon = P('Style') === 'tex' && iconName !== 'none' ? mcTexIconStyle(iconName) : null;
+    const skull = ip === 'none' || iconName === 'none' ? ''
+      : texIcon ? `<span class="bb-skull tex" data-tex="${texIcon.file}" data-fallback="${esc(mcIcon(iconName) || '')}" style="${texIcon.css}"></span>`
+      : mcIcon(iconName) ? `<img class="bb-skull" src="${mcIcon(iconName)}" alt="">` : '';
     b.el.innerHTML = `<div class="bb-title">${ip !== 'right' ? skull : ''}<span class="bb-text"></span>${ip !== 'left' ? skull : ''}</div>
       <div class="bb-track"><div class="bb-ghost"></div><div class="bb-fill"><i class="bb-shine"></i></div><div class="bb-armor"></div><div class="bb-notch" style="${notchCss(Number(P('Notches')))}"></div></div>`;
     colorize(b.el, P('Color') === 'auto' ? 'purple' : P('Color'), P('Hex'));
+    if (P('Style') === 'tex') {
+      const col = P('Color') === 'auto' ? 'purple' : P('Color');
+      const custom = !BAR_COLORS[col] || col === 'custom';
+      const tc = custom ? 'white' : col, n = [6, 10, 12, 20].includes(Number(P('Notches'))) ? Number(P('Notches')) : 0;
+      b.tex = { bg: [n ? `gui/sprites/boss_bar/notched_${n}_background.png` : '', `gui/sprites/boss_bar/${tc}_background.png`].filter(Boolean),
+                fg: [n ? `gui/sprites/boss_bar/notched_${n}_progress.png` : '', `gui/sprites/boss_bar/${tc}_progress.png`].filter(Boolean) };
+      if (custom && /^#[0-9a-f]{6}$/i.test(P('Hex') || '')) es.setProperty('--tx-tint', P('Hex'));
+    }
     if (cfg[`mB${i}Hide`]) b.el.querySelector('.bb-track').hidden = true;
     wrap.appendChild(b.el);
     bars.push(b);
   }
+  // Original-Texturen einsetzen; ohne Internet zurück auf den gezeichneten Pixel-Stil
+  if (bars.some(b => b.tex)) probeMcTextures(ok => {
+    for (const b of bars) {
+      if (!b.tex) continue;
+      if (!ok) { b.el.classList.replace('st-tex', 'st-pixel'); continue; }
+      const u = list => list.map(f => `url("${mcTexBase}${f}")`).join(', ');
+      b.el.style.setProperty('--tx-bg', u(b.tex.bg));
+      b.el.style.setProperty('--tx-fg', u(b.tex.fg));
+    }
+    wrap.querySelectorAll('.bb-skull.tex').forEach(el => {
+      if (ok) el.style.backgroundImage = `url("${mcTexBase}${el.dataset.tex}")`;
+      else if (el.dataset.fallback) el.outerHTML = `<img class="bb-skull" src="${el.dataset.fallback}" alt="">`;
+    });
+  });
   if (cfg.mSplash && bars[0]) {   // gelber Splash-Text wie im Minecraft-Menü
     const lines = cfg.mSplashLines.split(',').map(x => x.trim()).filter(Boolean);
     const sp = document.createElement('div');
@@ -2578,190 +2480,6 @@ function startQuiz(cfg) {
   if (cfg.channel) connectIRC(cfg.channel, handle);
 }
 
-/* =====================================================================
-   STREAM-OVERLAYS (Szenen): Ingame, Just Chatting, Start, Pause, Ende
-   Eine 1920×1080-Fläche mit Kamera-Rahmen, Chat, Alerts und Infoleiste.
-   ===================================================================== */
-const SCENE_THEMES = {
-  br:    { de: '🟦 Battle Royale (Fortnite-Stil)', font: 'Luckiest Guy', c1: '#2f7bff', c2: '#b84dff', c3: '#ffd23f' },
-  apex:  { de: '🟥 Legends (Apex-Stil)',            font: 'Teko',         c1: '#e3262b', c2: '#141416', c3: '#f3f0ea' },
-  arc:   { de: '🟧 Raider (Arc-Raiders-Stil)',      font: 'Rajdhani',     c1: '#ff7a1a', c2: '#14302f', c3: '#f1e6cf' },
-  clean: { de: '⬛ Modern & schlicht',               font: 'Inter',        c1: '#9b5cff', c2: '#101016', c3: '#ffffff' },
-  mc:    { de: '⛏ Minecraft',                       font: 'Minecraft',    c1: '#55ff55', c2: '#2b2b2b', c3: '#ffffff' },
-};
-const SCENE_TYPES = { game: '🎮 Ingame', chatting: '💬 Just Chatting', start: '⏳ Stream startet', brb: '☕ Gleich zurück', end: '👋 Stream-Ende' };
-const SCENE_FONT_WEIGHTS = { 'Luckiest Guy': '', 'Teko': ':wght@400;500;600;700', 'Rajdhani': ':wght@500;600;700' };
-function sceneFont(name) {
-  if (name in SCENE_FONT_WEIGHTS) {
-    if (!loadedFonts.has(name)) { loadedFonts.add(name); addLink('https://fonts.googleapis.com/css2?family=' + name.replace(/ /g, '+') + SCENE_FONT_WEIGHTS[name] + '&display=swap'); }
-    return `'${name}', 'Inter', system-ui, sans-serif`;
-  }
-  return fontStack(name);
-}
-// Wo der Kamera-Rahmen auf der 1920×1080-Fläche sitzt (auch für die Angaben im Editor)
-function camRect(cfg) {
-  const M = 36, bar = cfg.sBar !== 'none' ? 76 : 0;
-  if (cfg.sScene === 'chatting') {
-    const w = 1920 - M * 2 - cfg.sChatW - 28, h = Math.round(w * 9 / 16);
-    return { x: M, y: Math.max(M, Math.round((1080 - bar - h) / 2 + (cfg.sBar === 'top' ? bar : 0))), w, h: Math.min(h, 1080 - bar - M * 2) };
-  }
-  const w = cfg.sCamW, h = Math.round(w * 9 / 16);
-  const left = /l$/.test(cfg.sCamPos), top = /^t/.test(cfg.sCamPos);
-  const x = left ? M : 1920 - M - w;
-  const y = top ? M + (cfg.sBar === 'top' ? bar : 0) : 1080 - M - h - (cfg.sBar === 'bottom' ? bar : 0);
-  return { x, y, w, h };
-}
-
-function startScene(cfg) {
-  document.body.className = 'overlay';
-  const th = SCENE_THEMES[cfg.sTheme] || SCENE_THEMES.br;
-  const st = document.createElement('div');
-  st.id = 'scene';
-  st.className = `th-${cfg.sTheme} sc-${cfg.sScene} bar-${cfg.sBar}`;
-  document.body.appendChild(st);
-  const s = st.style;
-  const custom = cfg.sColors === 'custom';
-  s.setProperty('--c1', custom ? cfg.sC1 : th.c1);
-  s.setProperty('--c2', custom ? cfg.sC2 : th.c2);
-  s.setProperty('--c3', custom ? cfg.sC3 : th.c3);
-  s.setProperty('--sfont', sceneFont(cfg.sFont || th.font));
-  const fit = () => {
-    const k = Math.min(innerWidth / 1920, innerHeight / 1080);
-    s.transform = `scale(${k})`;
-    s.left = (innerWidth - 1920 * k) / 2 + 'px'; s.top = (innerHeight - 1080 * k) / 2 + 'px';
-  };
-  fit(); addEventListener('resize', fit);
-
-  const base = location.href.split('#')[0];
-  const extra = cfg.demo ? { demo: '1' } : {};
-  const full = ['start', 'brb', 'end'].includes(cfg.sScene);
-  const showCam = cfg.sScene === 'chatting' || (cfg.sScene === 'game' && cfg.sCam) || (full && cfg.sCamFull);
-  const label = esc(cfg.sCamLabel || cfg.channel || 'LIVE');
-  let html = `<div class="sc-bg"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>`;
-
-  // Kamera
-  if (showCam) {
-    const r = full ? { x: 1920 - 36 - 560, y: 1080 - 36 - 315 - (cfg.sBar === 'bottom' ? 76 : 0), w: 560, h: 315 } : camRect(cfg);
-    html += `<div class="sc-cam shape-${cfg.sCamShape}" style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px">
-      ${cfg.demo && !cfg.sCamLive ? '<div class="sc-cam-demo"><span>📷 Deine Kamera</span></div>' : ''}
-      ${cfg.sCamLive ? '<video autoplay muted playsinline></video>' : ''}
-      <div class="sc-cam-frame"></div><i class="cn tl"></i><i class="cn tr"></i><i class="cn bl"></i><i class="cn br"></i>
-      ${cfg.sCamName ? `<div class="sc-cam-label"><b>${label}</b>${cfg.sLive ? '<span class="sc-live">LIVE</span>' : ''}</div>` : ''}
-    </div>`;
-  }
-  // Chat-Feld
-  let chatBox = null;
-  if (cfg.sChat && (cfg.channel || cfg.demo)) {
-    let x, y, w = cfg.sChatW, h;
-    const bar = cfg.sBar !== 'none' ? 76 : 0, topOff = cfg.sBar === 'top' ? bar : 0;
-    if (cfg.sScene === 'chatting' || full) { x = 1920 - 36 - w; y = 36 + topOff; h = 1080 - 72 - bar; if (full && showCam) h -= 315 + 24; }
-    else {
-      x = cfg.sChatPos === 'left' ? 36 : 1920 - 36 - w; y = 36 + topOff; h = 1080 - 72 - bar;
-      const cam = camRect(cfg);
-      const gap = cfg.sCamName && ['apex', 'mc'].includes(cfg.sTheme) ? 72 : 24;
-      if (showCam && (cam.x < 960) === (cfg.sChatPos === 'left')) { if (cam.y > 540) h = cam.y - y - gap; else { y = cam.y + cam.h + 24 + (cfg.sCamName && !['apex', 'mc'].includes(cfg.sTheme) ? 40 : 0); h = 1080 - 36 - (cfg.sBar === 'bottom' ? bar : 0) - y; } }
-      h = Math.min(h, cfg.sChatH);
-    }
-    chatBox = { x, y, w, h };
-    html += `<div class="sc-chat" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"><div class="sc-chat-head">💬 Chat</div><iframe title="Chat" src="${base}#${configToHash({ ...cfg, maxMsgs: 25 }, 'chat', extra)}"></iframe></div>`;
-  }
-  // Titel für Start / Pause / Ende
-  if (full) {
-    const t = { start: [cfg.sStartTitle, cfg.sStartSub], brb: [cfg.sBrbTitle, cfg.sBrbSub], end: [cfg.sEndTitle, cfg.sEndSub] }[cfg.sScene];
-    const shift = chatBox ? -(cfg.sChatW + 28) / 2 : 0;
-    html += `<div class="sc-hero" style="--shift:${shift}px">
-      <div class="sc-kicker">${esc(cfg.sCamLabel || cfg.channel || '')}</div>
-      <h1 class="sc-title">${esc(t[0])}</h1><div class="sc-sub">${esc(t[1])}</div>
-      ${cfg.sScene === 'start' && cfg.sCountdown > 0 ? '<div class="sc-count">--:--</div>' : ''}
-      ${cfg.sScene !== 'start' ? '<div class="sc-recap"></div>' : ''}
-    </div>`;
-  }
-  // Infoleiste
-  const ITEMS = [['sBSub', 'sub', '⭐', 'Letztes Abo'], ['sBFollow', 'follow', '❤', 'Letzter Follow'], ['sBTip', 'tip', '💸', 'Letzte Spende'], ['sBBits', 'bits', '💎', 'Letzte Bits']].filter(i => cfg[i[0]]);
-  if (cfg.sBar !== 'none') {
-    html += `<div class="sc-bar"><div class="sc-brand"><span class="sc-dot"></span>${esc(cfg.sBrand || cfg.channel || '')}</div>
-      <div class="sc-items">${ITEMS.map(([, k, ic, l]) => `<div class="sc-item" data-item="${k}"><span class="ic">${ic}</span><span class="l">${l}</span><b>–</b></div>`).join('')}</div>
-      <div class="sc-social"></div>${cfg.sClock ? '<div class="sc-clock"></div>' : ''}</div>`;
-  }
-  // Alerts liegen über allem
-  if (cfg.sAlerts) html += `<iframe class="sc-alerts" title="Alerts" src="${base}#${configToHash(cfg, 'alerts', extra)}"></iframe>`;
-  st.innerHTML = html;
-
-  // Live-Kamera direkt im Overlay (nur wenn erlaubt)
-  const vid = st.querySelector('.sc-cam video');
-  if (vid && navigator.mediaDevices) navigator.mediaDevices.getUserMedia({ video: { width: 1920, height: 1080 } }).then(v => { vid.srcObject = v; }).catch(() => {});
-
-  /* --- Letzte Ereignisse merken (auch nach OBS-Neustart) --- */
-  const KEY = 'tco-scene-last-' + (cfg.channel || 'demo').toLowerCase();
-  let last = {};
-  try { last = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch {}
-  if (cfg.demo && !Object.keys(last).length) last = { sub: 'GamerGirl_99', follow: 'NeuerZuschauer', tip: 'VipVanessa · 10,00 €', bits: 'Lurker42 · 500' };
-  function showItem(k, pop) {
-    const el = st.querySelector(`[data-item="${k}"] b`);
-    if (!el) return;
-    el.textContent = last[k] || '–';
-    if (pop) { const it = el.parentElement; it.classList.remove('pop'); void it.offsetWidth; it.classList.add('pop'); }
-  }
-  ['sub', 'follow', 'tip', 'bits'].forEach(k => showItem(k));
-  function onEvent(ev) {
-    if (!ev) return;
-    let k = null, v = ev.name;
-    if (ev.kind === 'sub' || ev.kind === 'resub') k = 'sub';
-    else if (ev.kind === 'gift' || ev.kind === 'mass') { k = 'sub'; v = ev.name + (ev.amount > 1 ? ` · ${ev.amount}× Geschenk` : ' · Geschenk'); }
-    else if (ev.kind === 'follow') k = 'follow';
-    else if (ev.kind === 'tip') { k = 'tip'; v = `${ev.name} · ${formatMoney(ev.amount, ev.currency)}`; }
-    else if (ev.kind === 'bits') { k = 'bits'; v = `${ev.name} · ${ev.amount}`; }
-    if (!k) return;
-    last[k] = v;
-    try { localStorage.setItem(KEY, JSON.stringify(last)); } catch {}
-    showItem(k, true);
-    recap();
-  }
-  function recap() {
-    const r = st.querySelector('.sc-recap');
-    if (!r) return;
-    const parts = [['⭐', last.sub], ['❤', last.follow], ['💸', last.tip], ['💎', last.bits]].filter(x => x[1]);
-    r.innerHTML = parts.length ? `<div class="sc-recap-h">Danke an</div>` + parts.map(([i, n]) => `<span>${i} ${esc(n)}</span>`).join('') : '';
-  }
-  recap();
-
-  /* --- Social-Media & Uhr --- */
-  const socials = String(cfg.sSocials || '').split(/\s*[|,\n]\s*/).filter(Boolean);
-  const soc = st.querySelector('.sc-social');
-  if (soc && socials.length) {
-    let i = 0;
-    const show = () => { soc.classList.remove('swap'); void soc.offsetWidth; soc.textContent = socials[i++ % socials.length]; soc.classList.add('swap'); };
-    show(); if (socials.length > 1) setInterval(show, 6000);
-  }
-  const clock = st.querySelector('.sc-clock');
-  if (clock) { const t = () => clock.textContent = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }); t(); setInterval(t, 10000); }
-  const cd = st.querySelector('.sc-count');
-  if (cd) {
-    const end = Date.now() + cfg.sCountdown * 60000;
-    const tick = () => {
-      const left = Math.max(0, Math.round((end - Date.now()) / 1000));
-      if (left <= 0) { cd.textContent = cfg.sCountEnd; cd.classList.add('done'); return; }
-      cd.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
-      setTimeout(tick, 250);
-    };
-    tick();
-  }
-
-  /* --- Verbindungen: Twitch-Chat (Abos, Bits) und Spenden-Dienste (Follows, Spenden) --- */
-  const parseEvent = createEventParser();
-  if (cfg.channel) connectIRC(cfg.channel, m => { if (m.command === 'USERNOTICE' || m.command === 'PRIVMSG') onEvent(parseEvent(m)); });
-  if (cfg.seToken) connectSE(cfg.seToken.trim(), onEvent);
-  if (cfg.slToken) connectSL(cfg.slToken.trim(), onEvent);
-
-  // Test-Knöpfe: Infoleiste aktualisieren und an die Alerts weitergeben
-  const alertsFrame = st.querySelector('.sc-alerts');
-  window.addEventListener('message', e => {
-    if (!e.data || e.data.tco !== 'test') return;
-    onEvent(sampleEvent(e.data.kind));
-    if (alertsFrame && alertsFrame.contentWindow) alertsFrame.contentWindow.postMessage(e.data, '*');
-  });
-}
-
 /* ---------- Beispiel-Events (Vorschau / Test) ---------- */
 function sampleEvent(kind, emotes) {
   const names = ['GamerGirl_99', 'Lurker42', 'VipVanessa', 'ModMaxi', 'NeuerZuschauer'];
@@ -2841,6 +2559,7 @@ function startEditor() {
   } catch {}
   let tab = 'chat';
   try { tab = localStorage.getItem('tco-tab') || 'chat'; } catch {}
+  if (!['chat', 'alerts', 'bar', 'quiz'].includes(tab)) tab = 'chat';
 
   const otherFonts = FONTS.filter(f => !PIXEL_FONTS.includes(f));
   const fontOpts = `<optgroup label="Normale Schriften">${[...otherFonts, ...SYSTEM_FONTS].map(f => `<option>${f}</option>`).join('')}</optgroup><optgroup label="Pixel &amp; Minecraft">${[...PIXEL_FONTS, 'Eigene Schriftdatei'].map(f => `<option>${f}</option>`).join('')}</optgroup>`;
@@ -2955,8 +2674,8 @@ function startEditor() {
   <div class="ed">
     <aside class="side">
       <div class="brand"><div class="logo">🎮</div><div><h1>Twitch Stream Overlay</h1>
-      <p class="sub">Chat · Alerts · Wither · Overlays für OBS</p></div></div>
-      <div class="tabwrap"><div class="tabs"><button data-tab-btn="chat">💬 Chat</button><button data-tab-btn="alerts">🔔 Alerts</button><button data-tab-btn="bar">💀 Wither</button><button data-tab-btn="scene">🎬 Overlays</button><button data-tab-btn="quiz" id="quizTabBtn">🎯 Quiz</button></div></div>
+      <p class="sub">Chat · Alerts · Wither für OBS</p></div></div>
+      <div class="tabwrap"><div class="tabs"><button data-tab-btn="chat">💬 Chat</button><button data-tab-btn="alerts">🔔 Alerts</button><button data-tab-btn="bar">💀 Wither</button><button data-tab-btn="quiz" id="quizTabBtn">🎯 Quiz</button></div></div>
       <div class="side-body">
 
       <details open><summary>Kanal</summary><div class="grp">
@@ -2978,7 +2697,7 @@ function startEditor() {
         <div data-tab="chat">${range('stroke', 'Kontur', 0, 4, 0.5, ' px')}</div>
       </div></details>
 
-      <details data-tab="chat alerts bar scene quiz"><summary>🔤 Eigene Schriftdatei &amp; Minecraft-Extras</summary><div class="grp">
+      <details data-tab="chat alerts bar quiz"><summary>🔤 Eigene Schriftdatei &amp; Minecraft-Extras</summary><div class="grp">
         <div class="hint">Die Schrift „Minecraft“ wird automatisch aus dem Netz geladen. Willst du die <b>originale</b> Minecraft-Schrift oder eine andere Datei nutzen: Datei (.ttf/.otf/.woff) herunterladen, z. B. nach <code>C:\Stream\</code>, hier den Pfad eintragen und bei „Schrift“ <b>Eigene Schriftdatei</b> wählen.</div>
         <label class="f">Link oder Pfad zur Schriftdatei<input type="text" data-k="fontFile" placeholder="file:///C:/Stream/minecraft.ttf"></label>
         <label class="c"><input type="checkbox" data-k="mcCodes"> Minecraft-Farbcodes erlauben (<code>&amp;a</code> grün, <code>&amp;c</code> rot, <code>&amp;6</code> gold, <code>&amp;l</code> fett, <code>&amp;k</code> verschleiert …)</label>
@@ -3086,8 +2805,9 @@ function startEditor() {
           <div class="sect">Farbe &amp; Form</div>
           <label class="f">Farbe<select data-k="mB${i}Color"><option value="purple">Lila (Wither)</option><option value="pink">Pink (Enderdrache)</option><option value="blue">Blau</option><option value="red">Rot</option><option value="green">Grün</option><option value="yellow">Gelb</option><option value="white">Weiß</option><option value="custom">Eigene Farbe …</option></select></label>
           <div data-show="mB${i}Color=custom">${color(`mB${i}Hex`, 'Eigene Farbe')}</div>
-          <label class="f">Stil<select data-k="mB${i}Style"><option value="pixel">⛏ Pixel (wie in Minecraft)</option><option value="flat">Einfarbig</option><option value="grad">Farbverlauf</option></select></label>
+          <label class="f">Stil<select data-k="mB${i}Style"><option value="tex">⛏ Original Minecraft (echte Texturen)</option><option value="pixel">Pixel (nachgezeichnet)</option><option value="flat">Einfarbig</option><option value="grad">Farbverlauf</option></select></label>
           <div data-show="mB${i}Style=grad">${color(`mB${i}Hex2`, 'Zweite Farbe für den Verlauf')}</div>
+          <div class="hint" data-show="mB${i}Style=tex">Nutzt die echte Bossleiste und die echten Item-Symbole aus Minecraft 1.21.4. Sie werden beim Start aus dem Internet geladen. Ohne Internet erscheint automatisch der nachgezeichnete Pixel-Stil. Am originalgetreuesten mit Länge 182, Dicke 5, Rundung 0 und der Schriftart „Minecraft“.</div>
           ${range(`mB${i}Width`, 'Länge', 60, 400, 2, '')}
           ${range(`mB${i}Height`, 'Dicke', 2, 20, 1, '')}
           ${range(`mB${i}Radius`, 'Ecken-Rundung', 0, 10, 0.5, '')}
@@ -3244,63 +2964,8 @@ function startEditor() {
         </div>
       </div></details>
 
-      <!-- ============ STREAM-OVERLAYS ============ -->
-      <div class="hint intro" data-tab="scene">🎬 <b>Komplette Stream-Overlays</b> statt StreamElements: Kamera-Rahmen, Chat, Alerts und Infoleiste in einer einzigen Browser-Quelle. Dazu Start-, Pause- und End-Bildschirme. Chat und Alerts sehen so aus, wie du sie in den anderen Reitern eingestellt hast.</div>
-      <details open data-tab="scene"><summary>🎬 Szene &amp; Stil</summary><div class="grp">
-        <div class="scpick">${Object.entries(SCENE_TYPES).map(([k, v]) => `<label><input type="radio" name="sScene" value="${k}" data-radio="sScene">${v}</label>`).join('')}</div>
-        <label class="f">Stil<select data-k="sTheme">${Object.entries(SCENE_THEMES).map(([k, v]) => `<option value="${k}">${v.de}</option>`).join('')}</select></label>
-        <label class="f">Farben<select data-k="sColors"><option value="theme">Wie der Stil</option><option value="custom">Eigene Farben</option></select></label>
-        <div class="row3" data-show="sColors=custom">${color('sC1', 'Haupt')}${color('sC2', 'Hintergrund')}${color('sC3', 'Akzent')}</div>
-        <label class="f">Schriftart<select data-k="sFont"><option value="">Wie der Stil</option><option>Luckiest Guy</option><option>Teko</option><option>Rajdhani</option>${fontOpts}</select></label>
-        <div class="hint">Für jede Szene legst du in OBS eine eigene Browser-Quelle an: Szene wählen, URL kopieren, fertig. Tipp: In OBS „Browser aktualisieren, wenn Szene aktiv wird“ anhaken, dann startet der Countdown jedes Mal neu.</div>
-      </div></details>
-      <details open data-tab="scene"><summary>📷 Kamera</summary><div class="grp">
-        <label class="c" data-hide-scene="chatting start brb end"><input type="checkbox" data-k="sCam"> Kamera-Rahmen zeigen (Ingame)</label>
-        <label class="c" data-hide-scene="game chatting"><input type="checkbox" data-k="sCamFull"> Kamera auch hier zeigen (klein, unten rechts)</label>
-        <label class="f" data-hide-scene="chatting start brb end">Position<select data-k="sCamPos"><option value="br">Unten rechts</option><option value="bl">Unten links</option><option value="tr">Oben rechts</option><option value="tl">Oben links</option></select></label>
-        <div data-hide-scene="chatting start brb end">${range('sCamW', 'Breite', 280, 960, 10, ' px')}</div>
-        <label class="c"><input type="checkbox" data-k="sCamName"> Namensschild am Rahmen</label>
-        <label class="f">Text im Namensschild (leer = Kanalname)<input type="text" data-k="sCamLabel" placeholder="Kanalname"></label>
-        <label class="c"><input type="checkbox" data-k="sLive"> „LIVE“-Anzeige im Namensschild</label>
-        <div class="camfit" id="camInfo"></div>
-        <label class="c"><input type="checkbox" data-k="sCamLive"> Kamera direkt im Overlay zeigen (experimentell)</label>
-        <div class="hint">Normalerweise legst du deine Kamera in OBS <b>unter</b> das Overlay und ziehst sie genau in den Rahmen. Die direkte Kamera klappt in OBS nur mit dem Startparameter <code>--use-fake-ui-for-media-stream</code>.</div>
-      </div></details>
-      <details open data-tab="scene"><summary>💬 Chat &amp; 🔔 Alerts im Overlay</summary><div class="grp">
-        <label class="c"><input type="checkbox" data-k="sChat"> Chat im Overlay zeigen</label>
-        <label class="f" data-hide-scene="chatting start brb end">Seite<select data-k="sChatPos"><option value="right">Rechts</option><option value="left">Links</option></select></label>
-        ${range('sChatW', 'Chat-Breite', 300, 700, 10, ' px')}
-        <div data-hide-scene="chatting start brb end">${range('sChatH', 'Chat-Höhe höchstens', 200, 1080, 10, ' px')}</div>
-        <label class="c"><input type="checkbox" data-k="sAlerts"> Alerts im Overlay zeigen</label>
-        <div class="hint">Aussehen von Chat und Alerts stellst du in den Reitern 💬 Chat und 🔔 Alerts ein. Wenn du dieses Overlay nutzt, brauchst du keine eigenen Chat- und Alert-Quellen mehr.</div>
-      </div></details>
-      <details open data-tab="scene"><summary>📊 Infoleiste</summary><div class="grp">
-        <label class="f">Position<select data-k="sBar"><option value="bottom">Unten</option><option value="top">Oben</option><option value="none">Keine Leiste</option></select></label>
-        <label class="f">Text links (leer = Kanalname)<input type="text" data-k="sBrand" placeholder="Kanalname"></label>
-        <label class="c"><input type="checkbox" data-k="sBSub"> ⭐ Letztes Abo</label>
-        <label class="c"><input type="checkbox" data-k="sBFollow"> ❤ Letzter Follow <span class="hint">(braucht StreamElements oder Streamlabs)</span></label>
-        <label class="c"><input type="checkbox" data-k="sBTip"> 💸 Letzte Spende <span class="hint">(braucht StreamElements oder Streamlabs)</span></label>
-        <label class="c"><input type="checkbox" data-k="sBBits"> 💎 Letzte Bits</label>
-        <label class="c"><input type="checkbox" data-k="sClock"> 🕒 Uhrzeit</label>
-        <label class="f">Social Media (mit | trennen, wechseln alle 6 s)<input type="text" data-k="sSocials" placeholder="📷 @deinname | ▶ youtube.com/@deinname | 🎵 tiktok.com/@deinname"></label>
-      </div></details>
-      <details data-tab="scene"><summary>⏳ Texte für Start, Pause &amp; Ende</summary><div class="grp">
-        <div class="sect">Stream startet</div>
-        <label class="f">Titel<input type="text" data-k="sStartTitle"></label>
-        <label class="f">Untertitel<input type="text" data-k="sStartSub"></label>
-        ${range('sCountdown', 'Countdown (0 = aus)', 0, 30, 1, ' min')}
-        <label class="f">Text nach dem Countdown<input type="text" data-k="sCountEnd"></label>
-        <div class="sect">Gleich zurück</div>
-        <label class="f">Titel<input type="text" data-k="sBrbTitle"></label>
-        <label class="f">Untertitel<input type="text" data-k="sBrbSub"></label>
-        <div class="sect">Stream-Ende</div>
-        <label class="f">Titel<input type="text" data-k="sEndTitle"></label>
-        <label class="f">Untertitel<input type="text" data-k="sEndSub"></label>
-        <div class="hint">Bei Pause und Ende werden automatisch die letzten Unterstützer mit „Danke an …“ gezeigt.</div>
-      </div></details>
-
       <!-- ============ GETEILT ============ -->
-      <details open data-tab="alerts bar scene"><summary>Spenden &amp; Follows verbinden</summary><div class="grp">
+      <details open data-tab="alerts bar"><summary>Spenden &amp; Follows verbinden</summary><div class="grp">
         <label class="f">StreamElements JWT-Token<input type="password" data-k="seToken" placeholder="eyJhbGciOi…" autocomplete="off"></label>
         <div class="hint">streamelements.com → Profilbild → <b>Account</b> → <b>Channels</b> → „Show secrets“ → <b>JWT Token</b> kopieren.</div>
         <label class="f">Streamlabs Socket-API-Token<input type="password" data-k="slToken" placeholder="eyJ0eXAiOi…" autocomplete="off"></label>
@@ -3342,11 +3007,6 @@ function startEditor() {
           <button class="sm ghost" data-test="msg">Chat-Nachricht</button><button class="sm ghost" data-test="count">Zähler +1</button><button class="sm ghost" data-test="viewers">Zuschauer ±</button>
           <button class="sm ghost" data-test="reset">Stream auf 0</button>
         </div>
-        <div class="inl" data-tab="scene">
-          <span class="tlabel">Testen</span>
-          <button class="sm ghost" data-test="sub">⭐ Abo</button><button class="sm ghost" data-test="follow">❤ Follow</button><button class="sm ghost" data-test="tip">💸 Spende</button>
-          <button class="sm ghost" data-test="bits">💎 Bits</button><button class="sm ghost" data-test="mass">🎁 5 Geschenke</button><button class="sm ghost" data-test="raid">⚔ Raid</button>
-        </div>
         <div class="inl" data-tab="quiz">
           <span class="tlabel">Testen</span>
           <button class="sm ghost" data-test="q-random">Zufallsfrage</button><button class="sm ghost" data-test="q-correct">Zuschauer antwortet richtig</button>
@@ -3363,7 +3023,7 @@ function startEditor() {
           <div class="step"><b class="n">2</b><div>In OBS: Quellen → <b>+</b> → <b>Browser</b>. „Lokale Datei“ <b>nicht</b> anhaken und die URL ins Feld <b>URL</b> einfügen.</div></div>
           <div class="step"><b class="n">3</b><div><b>Chat</b> z. B. 420 × 800, <b>Alerts</b> 1920 × 1080, <b>Wither</b> 1920 × 400, <b>Overlay</b> 1920 × 1080. Bei Sounds „Audio über OBS steuern“ anhaken.</div></div>
         </div>
-        Chat, Alerts, Wither-Anzeige und Overlays sind <b>getrennte Browser-Quellen</b> mit eigener URL (links umschalten).
+        Chat, Alerts und Wither-Anzeige sind <b>getrennte Browser-Quellen</b> mit eigener URL (links umschalten).
         Wenn du etwas änderst, die neue URL in OBS einfügen. Die Wither-Anzeige merkt sich die Beträge in OBS, auch nach einem Neustart.
       </div>
     </main>
@@ -3384,14 +3044,7 @@ function startEditor() {
       else el.style.display = on ? '' : 'none';
     });
     document.querySelectorAll('[data-tab]').forEach(el => el.hidden = !el.dataset.tab.split(' ').includes(tab));
-    document.querySelectorAll('[data-hide-scene]').forEach(el => el.style.display = el.dataset.hideScene.split(' ').includes(state.sScene) ? 'none' : '');
     document.querySelectorAll('[data-radio]').forEach(el => el.checked = state[el.dataset.radio] === el.value);
-    const ci = document.getElementById('camInfo');
-    if (ci) {
-      const full = ['start', 'brb', 'end'].includes(state.sScene);
-      const r = full ? { x: 1920 - 36 - 560, y: 1080 - 36 - 315 - (state.sBar === 'bottom' ? 76 : 0), w: 560, h: 315 } : camRect(state);
-      ci.innerHTML = `<b>So legst du deine Kamera in OBS in den Rahmen</b><span>Rechtsklick auf die Kamera → Transformieren → Transformation bearbeiten:</span><div class="camvals"><span>X <b>${r.x}</b></span><span>Y <b>${r.y}</b></span><span>Breite <b>${r.w}</b></span><span>Höhe <b>${r.h}</b></span></div>`;
-    }
     document.querySelectorAll('[data-tab-btn]').forEach(b => b.classList.toggle('on', b.dataset.tabBtn === tab));
     // Item-Auswahl & Vorschau pro Alert-Typ
     document.querySelectorAll('[data-iconsel]').forEach(sel => {
@@ -3402,9 +3055,9 @@ function startEditor() {
     });
   }
   const baseUrl = location.href.split('#')[0];
-  const ready = () => tab === 'quiz' ? true : (tab === 'chat' || tab === 'scene') ? !!state.channel : !!(state.channel || state.seToken || state.slToken);
-  const URL_LABEL = { chat: 'URL für die Chat-Quelle in OBS', alerts: 'URL für die Alert-Quelle in OBS (geheim halten!)', bar: 'URL für die Wither-Anzeige in OBS (geheim halten!)', scene: 'URL für das Stream-Overlay in OBS (geheim halten!)', quiz: 'URL für das Quiz in OBS' };
-  const PW = { chat: '420', alerts: '800', bar: '800', scene: '1000', quiz: '1000' };
+  const ready = () => tab === 'quiz' ? true : tab === 'chat' ? !!state.channel : !!(state.channel || state.seToken || state.slToken);
+  const URL_LABEL = { chat: 'URL für die Chat-Quelle in OBS', alerts: 'URL für die Alert-Quelle in OBS (geheim halten!)', bar: 'URL für die Wither-Anzeige in OBS (geheim halten!)', quiz: 'URL für das Quiz in OBS' };
+  const PW = { chat: '420', alerts: '800', bar: '800', quiz: '1000' };
   let t;
   function update(reloadPreview = true) {
     try { localStorage.setItem('tco-config', JSON.stringify(state)); localStorage.setItem('tco-tab', tab); } catch {}
@@ -3533,7 +3186,7 @@ function startEditor() {
 const cfg = readConfig();
 if (cfg && (cfg.channel || cfg.demo || cfg.seToken || cfg.slToken || cfg.mode === 'quiz')) {
   window.addEventListener('hashchange', () => location.reload());
-  if (cfg.mode === 'alerts') startAlerts(cfg); else if (cfg.mode === 'bar') startBar(cfg); else if (cfg.mode === 'quiz') startQuiz(cfg); else if (cfg.mode === 'scene') startScene(cfg); else startChat(cfg);
+  if (cfg.mode === 'alerts') startAlerts(cfg); else if (cfg.mode === 'bar') startBar(cfg); else if (cfg.mode === 'quiz') startQuiz(cfg); else startChat(cfg);
 } else startEditor();
 </script>
 </body>
