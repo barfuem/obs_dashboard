@@ -518,7 +518,7 @@ const FONTS = ['Inter','Roboto','Poppins','Montserrat','Nunito','Lato','Open San
 const SYSTEM_FONTS = ['Arial','Segoe UI','Verdana','Tahoma','Trebuchet MS','Georgia','Impact','Comic Sans MS','Consolas'];
 
 // Eigene GIFs im Ordner gifs/ dieser Seite (Dateinamen hier eintragen)
-const APP_VERSION = '20.10.2026, 19:45';
+const APP_VERSION = '20.10.2026, 20:05';
 // Alerts sind pausiert: in OBS erscheint nichts (die Vorschau im Editor funktioniert weiter)
 const ALERTS_PAUSED = true;
 const GIF_BASE = 'gifs/';
@@ -3160,9 +3160,10 @@ function startEditor() {
   /* --- Hell / Dunkel --- */
   const applyTheme = dark => { document.body.classList.toggle('dark', dark); $('#themeToggle').textContent = dark ? '☀️' : '🌙'; };
   let dark = false;
-  try { dark = localStorage.getItem('tco-theme') === 'dark'; } catch {}
+  dark = true;   // Standard: dunkel
+  try { dark = localStorage.getItem('tco-theme2') !== 'light'; } catch {}
   applyTheme(dark);
-  $('#themeToggle').onclick = () => { dark = !dark; try { localStorage.setItem('tco-theme', dark ? 'dark' : 'light'); } catch {} applyTheme(dark); };
+  $('#themeToggle').onclick = () => { dark = !dark; try { localStorage.setItem('tco-theme2', dark ? 'dark' : 'light'); } catch {} applyTheme(dark); };
   applyModes();
 
   /* --- Quiz-Brett-Editor --- */
