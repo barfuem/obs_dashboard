@@ -476,7 +476,7 @@
 const DEFAULTS = {
   channel: '',
   // Schrift (gilt für Chat und Alerts)
-  font: 'Inter', customFont: '', size: 22, weight: 600, nweight: 800,
+  font: 'Open Sans', customFont: '', size: 22, weight: 800, nweight: 800,
   color: '#ffffff', nameColor: 'twitch', fixedNameColor: '#a970ff',
   shadow: 'soft', stroke: 0,
   // Chat-Layout
@@ -539,7 +539,7 @@ const FONTS = ['Inter','Roboto','Poppins','Montserrat','Nunito','Lato','Open San
 const SYSTEM_FONTS = ['Arial','Segoe UI','Verdana','Tahoma','Trebuchet MS','Georgia','Impact','Comic Sans MS','Consolas'];
 
 // Eigene GIFs im Ordner gifs/ dieser Seite (Dateinamen hier eintragen)
-const APP_VERSION = '20.10.2026, 22:35';
+const APP_VERSION = '20.10.2026, 22:40';
 // Alerts sind pausiert: in OBS erscheint nichts (die Vorschau im Editor funktioniert weiter)
 const ALERTS_PAUSED = true;
 const GIF_BASE = 'gifs/';
@@ -2614,6 +2614,9 @@ function startEditor() {
     const saved = JSON.parse(localStorage.getItem('tco-config') || '{}');
     const legacy = {};
     for (const k of Object.keys(saved)) if (k in LEGACY && !(k in DEFAULTS)) { legacy[k] = saved[k]; delete saved[k]; }
+    // Alte Standard-Schrift (Inter, halbfett) einmalig auf die neue (Open Sans, extra fett) umstellen
+    if (!localStorage.getItem('tco-font2') && saved.font === 'Inter' && Number(saved.weight) === 600) { saved.font = 'Open Sans'; saved.weight = 800; }
+    try { localStorage.setItem('tco-font2', '1'); } catch {}
     Object.assign(state, saved);
     applyLegacy(state, legacy, new Set(Object.keys(saved).filter(k => !(k in LEGACY))));
   } catch {}
