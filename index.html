@@ -428,10 +428,19 @@
   .win-bar .live { margin-left: auto; color: var(--ok); display: flex; align-items: center; gap: 6px; }
   .win-bar .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); animation: livepulse 1.6s infinite; }
   @keyframes livepulse { 50% { opacity: .35; } }
-  .stage .frame { flex: 1; position: relative; background: repeating-conic-gradient(#2a2c33 0 25%, #23252b 0 50%) 0 0/22px 22px; }
-  .stage.bg-game .frame { background: linear-gradient(135deg, #2b5876, #4e4376); }
-  .stage.bg-light .frame { background: #e9e9ee; }
-  .stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .stage { flex: none; align-items: stretch; min-height: 0; }
+  .win { width: 100%; flex: none; min-height: 0; }
+  .stage .frame { position: relative; overflow: auto; max-height: calc(100vh - 230px); background: #111; }
+  #sizer { position: relative; overflow: hidden; }
+  .canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; --k: .5;
+    background: repeating-conic-gradient(#2a2c33 0 25%, #23252b 0 50%) 0 0 / 40px 40px; }
+  .canvas-bg { position: absolute; inset: -60px; background: center / cover no-repeat; }
+  .stage.bg-light .canvas { background: #e9e9ee; }
+  .src { position: absolute; outline: calc(2px / var(--k)) dashed rgba(155,92,255,.85); }
+  .src iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
+  .srclabel { position: absolute; left: 0; bottom: 100%; margin-bottom: calc(4px / var(--k)); padding: calc(2px / var(--k)) calc(8px / var(--k)); border-radius: calc(5px / var(--k));
+    font: 600 calc(11px / var(--k)) / 1.4 Inter, sans-serif; color: #fff; background: rgba(124,77,255,.92); white-space: nowrap; }
+  .src.full .srclabel { bottom: auto; top: 0; margin: calc(6px / var(--k)); }
   .help { padding: 0 26px 28px; color: var(--muted); font-size: 13px; }
   .help h3 { color: var(--text); font-size: 14px; margin: 0 0 10px; }
   .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 10px; }
@@ -495,7 +504,6 @@ const DEFAULTS = {
   mSound: true, mVolume: 50, mDoneTpl: '✔ ZIEL ERREICHT: {goal}!',
   mHype: true, mHypeMin: 3, mHypeWin: 90, mTop: true, mTopTpl: '🏆 Top-Supporter: {name} ({amount})',
   mBossMsg: 1, mBossCd: 5, mBossSub: 50, mBossBit: 0.1, mBossTip: 10, mBossGrow: 1.5, mBossDeadTpl: '☠ Wither Stufe {level} besiegt! MVP: {mvp}',
-  mSplash: false, mSplashLines: 'Jetzt mit Wither!, 100% Pixel!, Auch mit Diamanten!, Danke fürs Zuschauen!, Kein Creeper in Sicht!, GG!',
   mCur: 'EUR', mGapH: 6,
   // Quiz
   qTitle: '⛏ Stream-Quiz', qTheme: 'mc', qFont: 'Minecraft', qSize: 28, qPoints: '5, 10, 20, 50, 100', qTime: 30,
@@ -518,7 +526,7 @@ const FONTS = ['Inter','Roboto','Poppins','Montserrat','Nunito','Lato','Open San
 const SYSTEM_FONTS = ['Arial','Segoe UI','Verdana','Tahoma','Trebuchet MS','Georgia','Impact','Comic Sans MS','Consolas'];
 
 // Eigene GIFs im Ordner gifs/ dieser Seite (Dateinamen hier eintragen)
-const APP_VERSION = '20.10.2026, 20:05';
+const APP_VERSION = '20.10.2026, 20:15';
 // Alerts sind pausiert: in OBS erscheint nichts (die Vorschau im Editor funktioniert weiter)
 const ALERTS_PAUSED = true;
 const GIF_BASE = 'gifs/';
@@ -1817,15 +1825,6 @@ function startBar(cfg) {
       else if (el.dataset.fallback) el.outerHTML = `<img class="bb-skull" src="${el.dataset.fallback}" alt="">`;
     });
   });
-  if (cfg.mSplash && bars[0]) {   // gelber Splash-Text wie im Minecraft-Menü
-    const lines = cfg.mSplashLines.split(',').map(x => x.trim()).filter(Boolean);
-    const sp = document.createElement('div');
-    sp.className = 'bb-splash';
-    sp.style.left = '96%'; sp.style.top = 'calc(var(--px) * -9)';
-    const pick = () => { sp.textContent = lines[Math.floor(Math.random() * lines.length)] || ''; };
-    pick(); setInterval(pick, 12000);
-    bars[0].el.appendChild(sp);
-  }
   const extra = document.createElement('div');
   extra.className = 'bb-extra';
   extra.innerHTML = `<div class="bb-hype" hidden><div class="bb-hype-text"></div><div class="bb-hype-track"><div class="bb-hype-fill"></div></div></div><div class="bb-top" hidden></div><div class="bb-ticker" hidden></div>`;
@@ -2863,8 +2862,6 @@ function startEditor() {
         <label class="c"><input type="checkbox" data-k="mSound"> Minecraft-Sounds (Ziel erreicht, Boss besiegt)</label>
         <div data-show="mSound=true">${range('mVolume', 'Lautstärke', 0, 100, 1, '%')}</div>
         <label class="f">Text bei Ziel erreicht<input type="text" data-k="mDoneTpl"></label>
-        <label class="c"><input type="checkbox" data-k="mSplash"> ⛏ Gelber Splash-Text wie im Minecraft-Menü</label>
-        <label class="f" data-show="mSplash=true">Sprüche (Komma getrennt, wechseln zufällig)<textarea data-k="mSplashLines"></textarea></label>
       </div></details>
 
       <details data-tab="bar"><summary>🔥 Extras: Hype-Zug &amp; Top-Supporter</summary><div class="grp">
@@ -2993,8 +2990,9 @@ function startEditor() {
           <div class="inl"><input type="text" id="url" readonly><button id="copy">Kopieren</button></div>
         </div>
         <div class="toolbar">
-          <div class="inl"><span class="tlabel">Hintergrund</span><select id="pbg"><option value="check">Transparent</option><option value="game">Farbig</option><option value="light">Hell</option></select></div>
-          <div class="inl"><span class="tlabel">Breite</span><select id="pw"><option>350</option><option>420</option><option>600</option><option>800</option><option>1000</option></select></div>
+          <div class="inl"><span class="tlabel">Hintergrund</span><select id="pbg"><option value="live">Livestream</option><option value="check">Transparent</option><option value="light">Hell</option></select></div>
+          <div class="inl" id="liveOpts"><span class="tlabel">Kanal</span><input type="text" id="pchan" style="width:130px" placeholder="papaplatte"><span class="tlabel">Unschärfe</span><input type="range" id="pblur" min="0" max="20" step="1" style="width:90px"></div>
+          <div class="inl"><span class="tlabel">Zoom</span><select id="pzoom"><option value="fit">Einpassen</option><option value="0.5">50 %</option><option value="0.75">75 %</option><option value="1">100 %</option></select></div>
           <label class="c"><input type="checkbox" id="pdemo" checked> Demo-Daten</label>
         </div>
         <div class="inl" data-tab="alerts">
@@ -3021,7 +3019,7 @@ function startEditor() {
           <span class="hint">(In der Vorschau kannst du auch direkt auf die Felder klicken.)</span>
         </div>
       </div>
-      <div class="stage" id="stage"><div class="win" id="frame"><div class="win-bar"><i></i><i></i><i></i><span>Vorschau</span><span class="live">Live</span></div><div class="frame"><iframe id="pv" title="Vorschau"></iframe></div></div></div>
+      <div class="stage" id="stage"><div class="win" id="frame"><div class="win-bar"><span>Vorschau wie in OBS · 1920 × 1080</span><span class="live">Live</span></div><div class="frame" id="viewport"><div id="sizer"><div class="canvas" id="canvas"><div class="canvas-bg" id="canvasBg"></div><div class="src" id="srcBox"><span class="srclabel" id="srcLabel"></span><iframe id="pv" title="Vorschau"></iframe></div></div></div></div></div></div>
       <div class="help">
         <h3>So kommt’s in OBS</h3>
         <div class="steps">
@@ -3080,7 +3078,32 @@ function startEditor() {
     if (!pv.channel && !extra.demo && tab !== 'quiz') { $('#pv').src = 'about:blank'; return; }
     $('#pv').src = baseUrl + '#' + configToHash(pv, tab, extra);
   }
-  function setWidth() { $('#pw').value = PW[tab]; $('#frame').style.setProperty('--pw', PW[tab] + 'px'); }
+  /* --- Vorschau im 16:9-Format wie das OBS-Bild, die Quelle an ihrem Platz --- */
+  const SRC = { chat: { w: 420, h: 800, x: 40, y: 240, n: 'Chat' }, alerts: { w: 1920, h: 1080, x: 0, y: 0, n: 'Alerts' }, bar: { w: 1920, h: 400, x: 0, y: 0, n: 'Wither' }, quiz: { w: 1200, h: 800, x: 360, y: 140, n: 'Quiz' } };
+  function setWidth() {
+    const sc = SRC[tab] || SRC.chat;
+    Object.assign($('#srcBox').style, { left: sc.x + 'px', top: sc.y + 'px', width: sc.w + 'px', height: sc.h + 'px' });
+    $('#srcLabel').textContent = `${sc.n}-Quelle · ${sc.w} × ${sc.h}`;
+    $('#srcBox').classList.toggle('full', sc.w === 1920);
+    const z = $('#pzoom').value, k = z === 'fit' ? $('#frame').clientWidth / 1920 : Number(z);
+    $('#canvas').style.transform = `scale(${k})`;
+    $('#canvas').style.setProperty('--k', k);
+    Object.assign($('#sizer').style, { width: 1920 * k + 'px', height: 1080 * k + 'px' });
+  }
+  new ResizeObserver(() => setWidth()).observe($('#frame'));
+  /* Hintergrund: echtes Vorschaubild eines laufenden Twitch-Streams (wird alle 60 s neu geladen) */
+  const PV = { bg: 'live', chan: 'papaplatte', blur: 6 };
+  try { Object.assign(PV, JSON.parse(localStorage.getItem('tco-preview') || '{}')); } catch {}
+  function applyBg() {
+    try { localStorage.setItem('tco-preview', JSON.stringify(PV)); } catch {}
+    $('#pbg').value = PV.bg; $('#pchan').value = PV.chan; $('#pblur').value = PV.blur;
+    $('#liveOpts').hidden = PV.bg !== 'live';
+    $('#stage').className = 'stage bg-' + PV.bg;
+    const bg = $('#canvasBg'), ch = (PV.chan || 'papaplatte').toLowerCase().replace(/[^a-z0-9_]/g, '');
+    bg.style.backgroundImage = PV.bg === 'live' ? `url("https://static-cdn.jtvnw.net/previews-ttv/live_user_${ch}-1920x1080.jpg?t=${Math.floor(Date.now() / 60000)}")` : '';
+    bg.style.filter = `blur(${PV.blur * 2}px) brightness(.85)`;
+  }
+  setInterval(() => { if (PV.bg === 'live') applyBg(); }, 60000);
   inputs.forEach(el => el.addEventListener('input', () => {
     const k = el.dataset.k, d = DEFAULTS[k];
     state[k] = el.type === 'checkbox' ? el.checked : typeof d === 'number' ? Number(el.value) : el.value;
@@ -3118,8 +3141,11 @@ function startEditor() {
       state = { ...DEFAULTS, channel: state.channel, seToken: state.seToken, slToken: state.slToken }; fill(); update();
     }
   };
-  $('#pbg').onchange = e => { $('#stage').className = 'stage bg-' + e.target.value; };
-  $('#pw').onchange = e => { $('#frame').style.setProperty('--pw', e.target.value + 'px'); };
+  $('#pbg').onchange = e => { PV.bg = e.target.value; applyBg(); };
+  $('#pchan').onchange = e => { PV.chan = e.target.value.trim().replace(/^.*twitch\.tv\//i, '') || 'papaplatte'; applyBg(); };
+  $('#pblur').oninput = e => { PV.blur = Number(e.target.value); applyBg(); };
+  $('#pzoom').onchange = setWidth;
+  applyBg();
   $('#pdemo').onchange = preview;
   setWidth();
   fill(); update();
