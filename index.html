@@ -309,7 +309,25 @@
   .logo { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; flex: none; background: var(--accent-soft); }
   .side h1 { font-size: 16px; margin: 0; letter-spacing: -.01em; font-weight: 700; }
   .side p.sub { margin: 0; color: var(--muted); font-size: 12px; }
-  .ver { font-size: 11px; color: var(--faint); margin-left: auto; align-self: flex-start; white-space: nowrap; }
+  .brand-r { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; align-self: flex-start; }
+  .ver { font-size: 11px; color: var(--faint); white-space: nowrap; }
+  #themeToggle { padding: 3px 8px; font-size: 14px; line-height: 1.2; }
+  /* --- Dunkelmodus --- */
+  body.editor.dark {
+    --bg: #0f1014; --panel: #16171c; --card: #1b1c22; --card2: #1b1c22; --field: #22232a; --line: #2a2c34; --line2: #3a3c46;
+    --text: #ececf1; --muted: #a2a5b0; --faint: #707480; --accent: #9b66ff; --accent2: #8a4dff; --accent-soft: rgba(155,102,255,.16);
+    --ok: #3ddc84;
+  }
+  body.editor.dark select option, body.editor.dark select optgroup { background: #1b1c22; }
+  body.editor.dark input[type=range] { background: #2f313a; }
+  body.editor.dark label.c input[type=checkbox]:not(:checked) { background: #3a3c46; }
+  body.editor.dark input[type=text]:hover, body.editor.dark input[type=number]:hover, body.editor.dark input[type=password]:hover, body.editor.dark select:hover, body.editor.dark textarea:hover, body.editor.dark button.ghost:hover { border-color: #50535f; }
+  body.editor.dark .intro { color: #d9c9ff !important; }
+  body.editor.dark .hint code, body.editor.dark .help code { color: #cbb6ff; }
+  body.editor.dark .warn { color: #ffd08a; background: rgba(255,170,60,.08); border-color: rgba(255,170,60,.28); }
+  body.editor.dark .win, body.editor.dark .win-bar { background: var(--card); }
+  body.editor.dark details[open] { box-shadow: 0 6px 20px rgba(0,0,0,.35); }
+  body.editor.dark ::-webkit-scrollbar-thumb { background: #3a3c46; }
   .tabwrap { position: sticky; top: 0; z-index: 5; padding: 0 22px; background: var(--panel); border-bottom: 1px solid var(--line); margin-bottom: 14px; }
   .tabs { display: flex; gap: 2px; }
   .tabs button { flex: 1; background: none; color: var(--muted); padding: 12px 4px 11px; font-size: 13.5px; border-radius: 0; font-weight: 600; border-bottom: 2px solid transparent; margin-bottom: -1px; box-shadow: none; }
@@ -328,6 +346,7 @@
   details[open] > summary::after { transform: rotate(45deg); border-color: var(--accent); }
   details[open] > summary { border-bottom: 1px solid var(--line); border-radius: var(--radius) var(--radius) 0 0; }
   .grp { padding: 14px 16px 16px; display: grid; gap: 12px; }
+  .stack { display: grid; gap: 12px; }
   .sect { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
   .grp > .sect:first-child, .grp > :is(label, div):first-child + .sect:nth-child(2) { margin-top: 0; }
 
@@ -499,7 +518,9 @@ const FONTS = ['Inter','Roboto','Poppins','Montserrat','Nunito','Lato','Open San
 const SYSTEM_FONTS = ['Arial','Segoe UI','Verdana','Tahoma','Trebuchet MS','Georgia','Impact','Comic Sans MS','Consolas'];
 
 // Eigene GIFs im Ordner gifs/ dieser Seite (Dateinamen hier eintragen)
-const APP_VERSION = '20.10.2026, 19:45';
+const APP_VERSION = '20.10.2026, 19:35';
+// Alerts sind pausiert: in OBS erscheint nichts (die Vorschau im Editor funktioniert weiter)
+const ALERTS_PAUSED = true;
 const GIF_BASE = 'gifs/';
 const MY_GIFS = [];
 const EVENT_STYLE = {
@@ -1322,6 +1343,7 @@ function iconHtml(v) {
    ===================================================================== */
 function startAlerts(cfg) {
   document.body.className = 'overlay';
+  if (ALERTS_PAUSED && !cfg.demo) return;
   const box = document.createElement('div');
   box.id = 'alerts';
   document.body.appendChild(box);
@@ -2669,8 +2691,8 @@ function startEditor() {
   <div class="ed">
     <aside class="side">
       <div class="brand"><div class="logo">🎮</div><div><h1>Twitch Stream Overlay</h1>
-      <p class="sub">Chat · Alerts · Wither für OBS</p></div><span class="ver" title="Stand dieser Version">Stand ${APP_VERSION}</span></div>
-      <div class="tabwrap"><div class="tabs"><button data-tab-btn="chat">💬 Chat</button><button data-tab-btn="alerts">🔔 Alerts</button><button data-tab-btn="bar">💀 Wither</button><button data-tab-btn="quiz" id="quizTabBtn">🎯 Quiz</button></div></div>
+      <p class="sub">Chat · Alerts · Wither für OBS</p></div><div class="brand-r"><button type="button" class="ghost sm" id="themeToggle" title="Hell / Dunkel umschalten">🌙</button><span class="ver" title="Stand dieser Version">Stand ${APP_VERSION}</span></div></div>
+      <div class="tabwrap"><div class="tabs"><button data-tab-btn="chat">💬 Chat</button><button data-tab-btn="alerts" id="alertsTabBtn">🔔 Alerts</button><button data-tab-btn="bar">💀 Wither</button><button data-tab-btn="quiz" id="quizTabBtn">🎯 Quiz</button></div></div>
       <div class="side-body">
 
       <details open><summary>Kanal</summary><div class="grp">
@@ -2742,6 +2764,7 @@ function startEditor() {
       </div></details>
 
       <!-- ============ ALERTS ============ -->
+      <div class="warn" data-tab="alerts" style="margin-bottom:12px">⏸ Alerts sind gerade <b>pausiert</b>: In OBS erscheinen keine Alerts. Hier kannst du sie trotzdem einstellen und in der Vorschau testen. Zum Einschalten sag Claude Bescheid.</div>
       <div class="hint intro" data-tab="alerts">Jeder Alert hat unten seine eigenen Einstellungen: Text, GIF, Schrift, Farben, Animation und Sound. Klapp einfach den Alert auf, den du ändern willst.</div>
       ${alertSections}
 
@@ -2752,7 +2775,7 @@ function startEditor() {
 
       <details data-tab="alerts"><summary>🗣️ Vorlesen, Wortfilter &amp; Befehle</summary><div class="grp">
         <label class="c"><input type="checkbox" data-k="aTts"> Nachrichten vorlesen (Text-to-Speech)</label>
-        <div data-show="aTts=true" style="display:grid;gap:12px">
+        <div data-show="aTts=true" class="stack">
           <div class="row">
             <label class="f">Spenden ab Betrag<input type="number" min="0" step="0.5" data-k="aTtsMin"></label>
             <label class="f">Bits ab<input type="number" min="1" data-k="aTtsBits"></label>
@@ -2776,7 +2799,7 @@ function startEditor() {
       ${[1, 2, 3, 4].map(i => `
       <details ${i <= 2 ? 'open' : ''} data-tab="bar"><summary>Balken ${i}</summary><div class="grp">
         <label class="c"><input type="checkbox" data-k="mB${i}On"> Balken ${i} anzeigen</label>
-        <div data-show="mB${i}On=true" style="display:grid;gap:12px">
+        <div data-show="mB${i}On=true" class="stack">
           <label class="f">Was soll er zeigen?<select data-k="mB${i}Metric">${Object.entries(METRICS).map(([k, m]) => `<option value="${k}">${m.label}</option>`).join('')}</select></label>
           <div class="sub-auth" data-show="mB${i}Metric=subs_live">
             <b>Einmalig nötig:</b> Twitch gibt den Sub-Stand nur mit deiner Erlaubnis heraus.
@@ -2824,7 +2847,7 @@ function startEditor() {
 
       <details data-tab="bar"><summary>📰 Laufband (wechselnde Infos)</summary><div class="grp">
         <label class="c"><input type="checkbox" data-k="mTicker"> Laufband unter den Balken anzeigen</label>
-        <div data-show="mTicker=true" style="display:grid;gap:12px">
+        <div data-show="mTicker=true" class="stack">
           ${range('mTickerSec', 'Wechsel alle', 3, 20, 1, ' s')}
           <label class="c"><input type="checkbox" data-k="mTkUptime"> ⏱ Wie lange du schon live bist</label>
           <label class="c"><input type="checkbox" data-k="mTkViewers"> 👀 Zuschauer gerade</label>
@@ -2964,6 +2987,7 @@ function startEditor() {
       </div>
       <div class="side-foot">
         <button class="ghost sm" id="reset">↺ Alles zurücksetzen</button>
+        <button class="ghost sm" id="alertsToggle">🔔 Alerts (pausiert) einblenden</button>
         <button class="ghost sm" id="quizToggle">🎯 Quiz (pausiert) einblenden</button>
       </div>
     </aside>
@@ -3128,15 +3152,23 @@ function startEditor() {
   }));
 
   /* --- Quiz ein/aus --- */
-  let quizOn = false;
-  try { quizOn = localStorage.getItem('tco-quiz-on') === '1'; } catch {}
+  let quizOn = false, alertsOn = false;
+  try { quizOn = localStorage.getItem('tco-quiz-on') === '1'; alertsOn = localStorage.getItem('tco-alerts-on') === '1'; } catch {}
   function applyModes() {
     $('#quizTabBtn').hidden = !quizOn;
-    document.querySelector('.tabs').style.gridTemplateColumns = `repeat(${quizOn ? 5 : 4}, 1fr)`;
+    $('#alertsTabBtn').hidden = !alertsOn;
     $('#quizToggle').textContent = quizOn ? '🎯 Quiz ausblenden' : '🎯 Quiz (pausiert) einblenden';
-    if (!quizOn && tab === 'quiz') { tab = 'chat'; setWidth(); update(); }
+    $('#alertsToggle').textContent = alertsOn ? '🔔 Alerts ausblenden' : '🔔 Alerts (pausiert) einblenden';
+    if ((!quizOn && tab === 'quiz') || (!alertsOn && tab === 'alerts')) { tab = 'chat'; setWidth(); update(); tidySections(); }
   }
   $('#quizToggle').onclick = () => { quizOn = !quizOn; try { localStorage.setItem('tco-quiz-on', quizOn ? '1' : '0'); } catch {} applyModes(); };
+  $('#alertsToggle').onclick = () => { alertsOn = !alertsOn; try { localStorage.setItem('tco-alerts-on', alertsOn ? '1' : '0'); } catch {} applyModes(); };
+  /* --- Hell / Dunkel --- */
+  const applyTheme = dark => { document.body.classList.toggle('dark', dark); $('#themeToggle').textContent = dark ? '☀️' : '🌙'; };
+  let dark = false;
+  try { dark = localStorage.getItem('tco-theme') === 'dark'; } catch {}
+  applyTheme(dark);
+  $('#themeToggle').onclick = () => { dark = !dark; try { localStorage.setItem('tco-theme', dark ? 'dark' : 'light'); } catch {} applyTheme(dark); };
   applyModes();
 
   /* --- Quiz-Brett-Editor --- */
