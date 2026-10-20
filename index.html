@@ -301,7 +301,7 @@
   body.editor * { scrollbar-width: thin; scrollbar-color: #c9cdd5 transparent; }
   body.editor ::-webkit-scrollbar { width: 10px; height: 10px; }
   body.editor ::-webkit-scrollbar-thumb { background: #cfd3da; border-radius: 10px; border: 3px solid transparent; background-clip: padding-box; }
-  .ed { display: grid; grid-template-columns: minmax(360px, 440px) 1fr; height: 100vh; }
+  .ed { display: grid; grid-template-columns: minmax(320px, 380px) 1fr; height: 100vh; }
 
   /* --- Seitenleiste --- */
   .side { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto; display: flex; flex-direction: column; }
@@ -430,8 +430,15 @@
   @keyframes livepulse { 50% { opacity: .35; } }
   .stage { flex: none; align-items: stretch; min-height: 0; }
   .win { width: 100%; flex: none; min-height: 0; }
-  .stage .frame { position: relative; overflow: auto; max-height: calc(100vh - 230px); background: #111; }
-  #sizer { position: relative; overflow: hidden; }
+  /* Vorschau füllt den restlichen Platz und passt sich der Fenstergröße an */
+  .stage { flex: 1 1 auto; min-height: 220px; padding-bottom: 12px; }
+  .win { flex: 1 1 auto; min-height: 0; }
+  .stage .frame { position: relative; overflow: auto; flex: 1 1 auto; min-height: 0; display: flex; background: #111; }
+  #sizer { position: relative; overflow: hidden; flex: none; margin: auto; }
+  .canvas-bg iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none; }
+  details.help { padding: 0 26px 14px; flex: none; }
+  details.help > summary { cursor: pointer; color: var(--text); font-weight: 600; font-size: 13px; padding: 4px 0 8px; }
+  details.help[open] > summary { margin-bottom: 4px; }
   .canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; --k: .5;
     background: repeating-conic-gradient(#2a2c33 0 25%, #23252b 0 50%) 0 0 / 40px 40px; }
   .canvas-bg { position: absolute; inset: -60px; background: center / cover no-repeat; }
@@ -448,7 +455,7 @@
   .step b.n { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; color: var(--accent2); background: var(--accent-soft); }
   .help b { color: var(--text); }
   [hidden] { display: none !important; }
-  @media (max-width: 900px) { .ed { grid-template-columns: 1fr; height: auto; } .side { border-right: 0; border-bottom: 1px solid var(--line); } .main { overflow: visible; } .topbar { position: static; } }
+  @media (max-width: 900px) { .stage .frame { flex: none; aspect-ratio: 16 / 9; } .ed { grid-template-columns: 1fr; height: auto; } .side { border-right: 0; border-bottom: 1px solid var(--line); } .main { overflow: visible; } .topbar { position: static; } }
 </style>
 </head>
 <body>
@@ -526,7 +533,7 @@ const FONTS = ['Inter','Roboto','Poppins','Montserrat','Nunito','Lato','Open San
 const SYSTEM_FONTS = ['Arial','Segoe UI','Verdana','Tahoma','Trebuchet MS','Georgia','Impact','Comic Sans MS','Consolas'];
 
 // Eigene GIFs im Ordner gifs/ dieser Seite (Dateinamen hier eintragen)
-const APP_VERSION = '20.10.2026, 20:15';
+const APP_VERSION = '20.10.2026, 22:20';
 // Alerts sind pausiert: in OBS erscheint nichts (die Vorschau im Editor funktioniert weiter)
 const ALERTS_PAUSED = true;
 const GIF_BASE = 'gifs/';
@@ -3020,8 +3027,8 @@ function startEditor() {
         </div>
       </div>
       <div class="stage" id="stage"><div class="win" id="frame"><div class="win-bar"><span>Vorschau wie in OBS · 1920 × 1080</span><span class="live">Live</span></div><div class="frame" id="viewport"><div id="sizer"><div class="canvas" id="canvas"><div class="canvas-bg" id="canvasBg"></div><div class="src" id="srcBox"><span class="srclabel" id="srcLabel"></span><iframe id="pv" title="Vorschau"></iframe></div></div></div></div></div></div>
-      <div class="help">
-        <h3>So kommt’s in OBS</h3>
+      <details class="help">
+        <summary>So kommt’s in OBS</summary>
         <div class="steps">
           <div class="step"><b class="n">1</b><div>Kanalname eintragen, alles einstellen und oben <b>Kopieren</b> klicken.</div></div>
           <div class="step"><b class="n">2</b><div>In OBS: Quellen → <b>+</b> → <b>Browser</b>. „Lokale Datei“ <b>nicht</b> anhaken und die URL ins Feld <b>URL</b> einfügen.</div></div>
@@ -3029,7 +3036,7 @@ function startEditor() {
         </div>
         Chat, Alerts und Wither-Anzeige sind <b>getrennte Browser-Quellen</b> mit eigener URL (links umschalten).
         Wenn du etwas änderst, die neue URL in OBS einfügen. Die Wither-Anzeige merkt sich die Beträge in OBS, auch nach einem Neustart.
-      </div>
+      </details>
     </main>
   </div>`;
 
@@ -3085,13 +3092,14 @@ function startEditor() {
     Object.assign($('#srcBox').style, { left: sc.x + 'px', top: sc.y + 'px', width: sc.w + 'px', height: sc.h + 'px' });
     $('#srcLabel').textContent = `${sc.n}-Quelle · ${sc.w} × ${sc.h}`;
     $('#srcBox').classList.toggle('full', sc.w === 1920);
-    const z = $('#pzoom').value, k = z === 'fit' ? $('#frame').clientWidth / 1920 : Number(z);
+    const vp = $('#viewport'), z = $('#pzoom').value;
+    const k = z === 'fit' ? Math.max(.05, Math.min((vp.clientWidth - 1) / 1920, (vp.clientHeight - 1) / 1080)) : Number(z);
     $('#canvas').style.transform = `scale(${k})`;
     $('#canvas').style.setProperty('--k', k);
     Object.assign($('#sizer').style, { width: 1920 * k + 'px', height: 1080 * k + 'px' });
   }
-  new ResizeObserver(() => setWidth()).observe($('#frame'));
-  /* Hintergrund: echtes Vorschaubild eines laufenden Twitch-Streams (wird alle 60 s neu geladen) */
+  new ResizeObserver(() => setWidth()).observe($('#viewport'));
+  /* Hintergrund: der echte Twitch-Livestream (stumm) als Player, darunter das Vorschaubild als Reserve */
   const PV = { bg: 'live', chan: 'papaplatte', blur: 6 };
   try { Object.assign(PV, JSON.parse(localStorage.getItem('tco-preview') || '{}')); } catch {}
   function applyBg() {
@@ -3102,6 +3110,11 @@ function startEditor() {
     const bg = $('#canvasBg'), ch = (PV.chan || 'papaplatte').toLowerCase().replace(/[^a-z0-9_]/g, '');
     bg.style.backgroundImage = PV.bg === 'live' ? `url("https://static-cdn.jtvnw.net/previews-ttv/live_user_${ch}-1920x1080.jpg?t=${Math.floor(Date.now() / 60000)}")` : '';
     bg.style.filter = `blur(${PV.blur * 2}px) brightness(.85)`;
+    const host = location.hostname, want = PV.bg === 'live' && host ? ch : '';
+    if (bg.dataset.ch !== want) {
+      bg.dataset.ch = want;
+      bg.innerHTML = want ? `<iframe title="Livestream" allow="autoplay; fullscreen" src="https://player.twitch.tv/?channel=${want}&parent=${encodeURIComponent(host)}&muted=true&autoplay=true&controls=false"></iframe>` : '';
+    }
   }
   setInterval(() => { if (PV.bg === 'live') applyBg(); }, 60000);
   inputs.forEach(el => el.addEventListener('input', () => {
