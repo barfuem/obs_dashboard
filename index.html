@@ -311,10 +311,11 @@
   .side p.sub { margin: 0; color: var(--muted); font-size: 12px; }
   .brand-r { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; align-self: flex-start; }
   .ver { font-size: 11px; color: var(--faint); white-space: nowrap; }
-  /* --- Dunkelmodus (Standard) --- */
+  #themeToggle { padding: 3px 8px; font-size: 14px; line-height: 1.2; }
+  /* --- Dunkelmodus --- */
   body.editor.dark {
-    --bg: #08080a; --panel: #101013; --card: #16161a; --card2: #16161a; --field: #1d1d22; --line: #222228; --line2: #313139;
-    --text: #f0f0f3; --muted: #9c9ca8; --faint: #66666f; --accent: #8b5cf6; --accent2: #7c3aed; --accent-soft: rgba(139,92,246,.16);
+    --bg: #0f1014; --panel: #16171c; --card: #1b1c22; --card2: #1b1c22; --field: #22232a; --line: #2a2c34; --line2: #3a3c46;
+    --text: #ececf1; --muted: #a2a5b0; --faint: #707480; --accent: #9b66ff; --accent2: #8a4dff; --accent-soft: rgba(155,102,255,.16);
     --ok: #3ddc84;
   }
   body.editor.dark select option, body.editor.dark select optgroup { background: #1b1c22; }
@@ -437,126 +438,6 @@
   .step { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; gap: 10px; line-height: 1.5; }
   .step b.n { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; color: var(--accent2); background: var(--accent-soft); }
   .help b { color: var(--text); }
-  /* ================= STUDIO-AUFBAU ================= */
-  .ed { grid-template-columns: 84px minmax(0, 1fr) 410px; grid-template-rows: 62px minmax(0, 1fr) auto;
-    grid-template-areas: "rail brand brand" "rail main side" "rail main foot"; }
-  .side { display: contents; }
-  .brand { grid-area: brand; padding: 0 22px; border-bottom: 1px solid var(--line); background: var(--panel); align-items: center; }
-  .brand .logo { width: 32px; height: 32px; border-radius: 9px; font-size: 16px; background: linear-gradient(135deg, var(--accent), #c026d3); }
-  .brand-r { flex-direction: row; align-items: center; gap: 12px; align-self: center; }
-  .tabwrap { grid-area: rail; position: static; padding: 12px 10px; margin: 0; border-bottom: 0; border-right: 1px solid var(--line); background: var(--panel); }
-  .tabs { flex-direction: column; gap: 6px; }
-  .tabs button { flex: none; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 0 8px; border: 0; margin: 0; border-radius: 12px; font-size: 11px; font-weight: 600; color: var(--muted); }
-  .tabs button i { font-style: normal; font-size: 21px; line-height: 1; filter: grayscale(.6); opacity: .8; transition: filter .15s, opacity .15s; }
-  .tabs button:hover { background: var(--field); color: var(--text); }
-  .tabs button.on { background: var(--accent-soft); color: var(--text); box-shadow: inset 0 0 0 1px rgba(139,92,246,.35); }
-  .tabs button.on i, .tabs button:hover i { filter: none; opacity: 1; }
-  .side-body { grid-area: side; overflow-y: auto; padding: 16px 16px 8px; border-left: 1px solid var(--line); background: var(--panel); }
-  .side-foot { grid-area: foot; margin: 0; border-left: 1px solid var(--line); background: var(--panel); padding: 12px 16px 16px; }
-  .main { grid-area: main; }
-  .topbar { padding: 18px 24px 10px; }
-  .stage { padding: 6px 24px 20px; align-items: stretch; min-height: 0; flex: none; }
-  .win { width: 100%; flex: none; min-height: 0; border-radius: 14px; }
-  .win-bar { justify-content: space-between; }
-  .stage .frame { flex: none; overflow: auto; max-height: calc(100vh - 240px); background: var(--field); }
-  #sizer { position: relative; }
-  .canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; --k: .5;
-    background: repeating-conic-gradient(#2a2a31 0 25%, #212127 0 50%) 0 0 / 40px 40px; }
-  .stage.bg-light .canvas { background: #ececf1; }
-  .stage.bg-game .canvas { background:
-    radial-gradient(60px 60px at 1500px 200px, #fff7c2, #ffe066 60%, transparent 62%),
-    linear-gradient(180deg, transparent 0 640px, #5d9b3a 640px 680px, #866043 680px),
-    radial-gradient(260px 70px at 420px 180px, rgba(255,255,255,.9), transparent 70%), radial-gradient(320px 80px at 1150px 120px, rgba(255,255,255,.85), transparent 70%),
-    linear-gradient(180deg, #78a7ff, #b9d4ff 640px); }
-  .src { position: absolute; outline: calc(2px / var(--k)) dashed rgba(139,92,246,.75); outline-offset: 0; }
-  .src iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
-  .srclabel { position: absolute; left: 0; bottom: 100%; margin-bottom: calc(4px / var(--k)); padding: calc(2px / var(--k)) calc(8px / var(--k)); border-radius: calc(5px / var(--k));
-    font: 600 calc(11px / var(--k)) / 1.4 Inter, sans-serif; color: #fff; background: rgba(139,92,246,.9); white-space: nowrap; }
-  .src[style*="top: 0px"] .srclabel { bottom: auto; top: 0; margin: calc(6px / var(--k)); }
-  .stage iframe { position: absolute; }
-  @media (max-width: 1100px) {
-    .ed { grid-template-columns: 70px minmax(0, 1fr); grid-template-rows: 62px auto auto auto; grid-template-areas: "rail brand" "rail main" "rail side" "rail foot"; height: auto; }
-    .main, .side-body { overflow: visible; }
-  }
-  .win-bar .tally, .win-bar .tc { display: none; }
-  /* ===== Design: dunkel, im Stil von claude.ai ===== */
-  body.editor.skin-claude {
-    --bg: #262624; --panel: #1f1e1d; --card: #262624; --card2: #262624; --field: #30302e; --line: rgba(222,220,209,.12); --line2: rgba(222,220,209,.2);
-    --text: #faf9f5; --muted: #c2c0b6; --faint: #8c8a83; --accent: #d97757; --accent2: #c6613f; --accent-soft: rgba(217,119,87,.14);
-    --ok: #7fbf8a; --radius: 12px;
-    --ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; --serif: 'Source Serif 4', 'Tiempos Text', Georgia, serif;
-    font-family: var(--ui); background: var(--bg); color: var(--text);
-  }
-  .skin-claude .brand { background: var(--bg); border-bottom: 1px solid var(--line); }
-  .skin-claude .brand .logo { width: 32px; height: 32px; border-radius: 9px; background: var(--accent); color: #fff; font-size: 15px; }
-  .skin-claude .side h1 { font-family: var(--serif); font-weight: 500; font-size: 21px; letter-spacing: -.01em; }
-  .skin-claude .side p.sub { font-size: 12px; color: var(--muted); }
-  .skin-claude .ver { font-size: 12px; color: var(--faint); }
-  /* Leiste links */
-  .skin-claude .tabwrap { background: var(--panel); border-right-color: var(--line); padding: 14px 10px; }
-  .skin-claude .tabs { gap: 8px; }
-  .skin-claude .tabs button { border-radius: 12px; padding: 12px 0 9px; font-size: 11.5px; font-weight: 500; color: var(--muted); }
-  .skin-claude .tabs button i { filter: grayscale(1); opacity: .6; }
-  .skin-claude .tabs button:hover { background: rgba(222,220,209,.06); color: var(--text); }
-  .skin-claude .tabs button.on { background: var(--field); color: var(--text); box-shadow: inset 0 0 0 1px var(--line2); }
-  .skin-claude .tabs button.on i { filter: none; opacity: 1; }
-  /* Einstellungen rechts: wie ein Inhaltsverzeichnis */
-  .skin-claude .side-body { background: var(--panel); border-left-color: var(--line); padding: 8px 26px 8px; counter-reset: ch; }
-  .skin-claude details { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; margin: 0; box-shadow: none !important; }
-  .skin-claude details:not([hidden]) { counter-increment: ch; }
-  .skin-claude summary { font-family: var(--serif); font-weight: 400; font-size: 20px; letter-spacing: -.005em; padding: 16px 0 14px; border-radius: 0; gap: 14px; }
-  .skin-claude summary:hover { background: transparent; color: var(--accent); }
-  .skin-claude summary::before { content: counter(ch, decimal-leading-zero); font-family: var(--ui); font-size: 11px; font-weight: 600; color: var(--faint); letter-spacing: .06em; width: 18px; }
-  .skin-claude details[open] > summary { border-bottom: 0; color: var(--text); }
-  .skin-claude details[open] > summary::before { color: var(--accent); }
-  .skin-claude summary::after { width: 9px; height: 9px; border-width: 1.5px; border-color: var(--text); }
-  .skin-claude .grp { padding: 0 0 22px 32px; gap: 14px; }
-  .skin-claude .sect { font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 17px; font-weight: 400; color: var(--text); border-top: 1px solid var(--line); padding-top: 14px; }
-  .skin-claude label.f { font-size: 12.5px; color: var(--muted); font-weight: 500; }
-  .skin-claude input[type=text], .skin-claude input[type=number], .skin-claude input[type=password], .skin-claude select, .skin-claude textarea { border-radius: 10px; border-color: var(--line2); background-color: var(--field); color: var(--text); padding: 9px 12px; }
-  .skin-claude select { padding-right: 34px; }
-  .skin-claude input:focus, .skin-claude select:focus, .skin-claude textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-  .skin-claude select option, .skin-claude select optgroup { background: #30302e; color: var(--text); }
-  .skin-claude input[type=text]:hover, .skin-claude input[type=number]:hover, .skin-claude select:hover, .skin-claude textarea:hover { border-color: rgba(222,220,209,.32); }
-  .skin-claude .pill { font-size: 12.5px; font-weight: 600; color: var(--accent); }
-  .skin-claude input[type=range] { height: 2px; background: var(--line2); }
-  .skin-claude input[type=range]::-webkit-slider-thumb { width: 16px; height: 16px; background: var(--text); border: 3px solid var(--panel); box-shadow: 0 0 0 1px var(--text); }
-  .skin-claude label.c input[type=checkbox] { background: #4a4945; }
-  .skin-claude label.c input[type=checkbox]::after { background: #faf9f5; }
-  .skin-claude label.c input[type=checkbox]:checked { background: var(--accent2); }
-  .skin-claude input[type=color] { border-radius: 50%; }
-  .skin-claude input[type=color]::-webkit-color-swatch { border-radius: 50%; }
-  .skin-claude .intro { background: transparent; border-left: 2px solid var(--accent); border-radius: 0; color: var(--muted) !important; font-family: var(--serif); font-size: 15.5px; line-height: 1.45; padding: 2px 0 2px 14px; }
-  .skin-claude .warn { border-radius: 12px; background: rgba(230,170,80,.08); border-color: rgba(230,170,80,.28); color: #f0c98a; }
-  .skin-claude .side-foot { background: var(--panel); border-left-color: var(--line); }
-  /* Knöpfe */
-  .skin-claude button { border-radius: 10px; font-weight: 500; }
-  .skin-claude button:not(.ghost):not([data-tab-btn]) { background: var(--accent2); color: #fff; }
-  .skin-claude button:not(.ghost):not([data-tab-btn]):hover { background: var(--accent); }
-  .skin-claude button.ghost { background: transparent; border-color: var(--line2); color: var(--text); }
-  .skin-claude button.ghost:hover { background: var(--field); border-color: rgba(222,220,209,.32); }
-  /* Mitte */
-  .skin-claude .topbar { background: var(--bg); padding: 22px 34px 12px; }
-  .skin-claude .urlcard { background: transparent; border: 0; padding: 0; }
-  .skin-claude .urlcard .hint { font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.01em; color: var(--text); }
-  .skin-claude .topbar .inl input[type=text] { border-radius: 12px; background-color: var(--field); padding: 11px 16px; color: var(--muted); }
-  .skin-claude #copy { padding: 11px 26px; }
-  .skin-claude .tlabel { text-transform: none; letter-spacing: 0; font-size: 12.5px; font-weight: 500; color: var(--muted); }
-  .skin-claude .toolbar select { border-radius: 10px; }
-  .skin-claude .stage { padding: 10px 34px 26px; }
-  .skin-claude .win { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); box-shadow: 0 24px 50px -20px rgba(0,0,0,.6); }
-  .skin-claude .win-bar { background: var(--panel); border-bottom: 1px solid var(--line); font-weight: 500; color: var(--faint); }
-  .skin-claude .win-bar .tally, .skin-claude .win-bar .tc { display: none; }
-  .skin-claude .win-bar .live { color: var(--ok); }
-  .skin-claude .stage .frame { background: #1a1918; }
-  .skin-claude .canvas { background: repeating-conic-gradient(#232221 0 25%, #1c1b1a 0 50%) 0 0 / 40px 40px; }
-  .stage.bg-light .canvas { background: #ece9e1; }
-  .skin-claude .src { outline-color: var(--accent); outline-style: solid; }
-  .skin-claude .srclabel { background: var(--accent2); color: #fff; border-radius: calc(999px / var(--k)); font-family: var(--serif); font-style: italic; font-weight: 400; font-size: calc(14px / var(--k)); }
-  .skin-claude .help { padding: 0 34px 34px; }
-  .skin-claude .help h3 { font-family: var(--serif); font-weight: 400; font-size: 22px; color: var(--text); }
-  .skin-claude .step { border: 0; border-top: 1px solid var(--line2); border-radius: 0; background: transparent; padding: 14px 0; }
-  .skin-claude .step b.n { background: transparent; color: var(--accent); font-family: var(--serif); font-size: 24px; font-weight: 400; width: auto; height: auto; }
   [hidden] { display: none !important; }
   @media (max-width: 900px) { .ed { grid-template-columns: 1fr; height: auto; } .side { border-right: 0; border-bottom: 1px solid var(--line); } .main { overflow: visible; } .topbar { position: static; } }
 </style>
@@ -637,7 +518,7 @@ const FONTS = ['Inter','Roboto','Poppins','Montserrat','Nunito','Lato','Open San
 const SYSTEM_FONTS = ['Arial','Segoe UI','Verdana','Tahoma','Trebuchet MS','Georgia','Impact','Comic Sans MS','Consolas'];
 
 // Eigene GIFs im Ordner gifs/ dieser Seite (Dateinamen hier eintragen)
-const APP_VERSION = '20.10.2026, 20:05';
+const APP_VERSION = '20.10.2026, 19:45';
 // Alerts sind pausiert: in OBS erscheint nichts (die Vorschau im Editor funktioniert weiter)
 const ALERTS_PAUSED = true;
 const GIF_BASE = 'gifs/';
@@ -2714,9 +2595,8 @@ function runDemoChat(handle, emotes) {
    EDITOR
    ===================================================================== */
 function startEditor() {
-  document.body.className = 'editor skin-claude';
+  document.body.className = 'editor';
   fontStack('Inter');
-  addLink('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap');
   let state = { ...DEFAULTS };
   try {
     const saved = JSON.parse(localStorage.getItem('tco-config') || '{}');
@@ -2813,8 +2693,8 @@ function startEditor() {
   <div class="ed">
     <aside class="side">
       <div class="brand"><div class="logo">🎮</div><div><h1>Twitch Stream Overlay</h1>
-      <p class="sub">Chat · Alerts · Wither für OBS</p></div><div class="brand-r"><span class="ver" title="Stand dieser Version">Stand ${APP_VERSION}</span></div></div>
-      <div class="tabwrap"><div class="tabs"><button data-tab-btn="chat"><i>💬</i><span>Chat</span></button><button data-tab-btn="alerts" id="alertsTabBtn"><i>🔔</i><span>Alerts</span></button><button data-tab-btn="bar"><i>💀</i><span>Wither</span></button><button data-tab-btn="quiz" id="quizTabBtn"><i>🎯</i><span>Quiz</span></button></div></div>
+      <p class="sub">Chat · Alerts · Wither für OBS</p></div><div class="brand-r"><button type="button" class="ghost sm" id="themeToggle" title="Hell / Dunkel umschalten">🌙</button><span class="ver" title="Stand dieser Version">Stand ${APP_VERSION}</span></div></div>
+      <div class="tabwrap"><div class="tabs"><button data-tab-btn="chat">💬 Chat</button><button data-tab-btn="alerts" id="alertsTabBtn">🔔 Alerts</button><button data-tab-btn="bar">💀 Wither</button><button data-tab-btn="quiz" id="quizTabBtn">🎯 Quiz</button></div></div>
       <div class="side-body">
 
       <details open><summary>Kanal</summary><div class="grp">
@@ -3113,8 +2993,8 @@ function startEditor() {
           <div class="inl"><input type="text" id="url" readonly><button id="copy">Kopieren</button></div>
         </div>
         <div class="toolbar">
-          <div class="inl"><span class="tlabel">Hintergrund</span><select id="pbg"><option value="check">Transparent</option><option value="light">Hell</option></select></div>
-          <div class="inl"><span class="tlabel">Zoom</span><select id="pzoom"><option value="fit">Einpassen</option><option value="0.5">50 %</option><option value="0.75">75 %</option><option value="1">100 %</option></select></div>
+          <div class="inl"><span class="tlabel">Hintergrund</span><select id="pbg"><option value="check">Transparent</option><option value="game">Farbig</option><option value="light">Hell</option></select></div>
+          <div class="inl"><span class="tlabel">Breite</span><select id="pw"><option>350</option><option>420</option><option>600</option><option>800</option><option>1000</option></select></div>
           <label class="c"><input type="checkbox" id="pdemo" checked> Demo-Daten</label>
         </div>
         <div class="inl" data-tab="alerts">
@@ -3141,7 +3021,7 @@ function startEditor() {
           <span class="hint">(In der Vorschau kannst du auch direkt auf die Felder klicken.)</span>
         </div>
       </div>
-      <div class="stage" id="stage"><div class="win" id="frame"><div class="win-bar"><span>OBS-Bild · 1920 × 1080</span><span class="live">Live-Vorschau</span></div><div class="frame" id="viewport"><div id="sizer"><div class="canvas" id="canvas"><div class="src" id="srcBox"><span class="srclabel" id="srcLabel"></span><iframe id="pv" title="Vorschau"></iframe></div></div></div></div></div></div>
+      <div class="stage" id="stage"><div class="win" id="frame"><div class="win-bar"><i></i><i></i><i></i><span>Vorschau</span><span class="live">Live</span></div><div class="frame"><iframe id="pv" title="Vorschau"></iframe></div></div></div>
       <div class="help">
         <h3>So kommt’s in OBS</h3>
         <div class="steps">
@@ -3200,19 +3080,7 @@ function startEditor() {
     if (!pv.channel && !extra.demo && tab !== 'quiz') { $('#pv').src = 'about:blank'; return; }
     $('#pv').src = baseUrl + '#' + configToHash(pv, tab, extra);
   }
-  /* --- Vorschau als OBS-Bild (1920 × 1080) mit der Quelle an ihrem Platz --- */
-  const SRC = { chat: { w: 420, h: 800, x: 40, y: 240, n: 'Chat' }, alerts: { w: 1920, h: 1080, x: 0, y: 0, n: 'Alerts' }, bar: { w: 1920, h: 400, x: 0, y: 0, n: 'Wither' }, quiz: { w: 1200, h: 800, x: 360, y: 140, n: 'Quiz' } };
-  function setWidth() {
-    const sc = SRC[tab] || SRC.chat;
-    Object.assign($('#srcBox').style, { left: sc.x + 'px', top: sc.y + 'px', width: sc.w + 'px', height: sc.h + 'px' });
-    $('#srcLabel').textContent = `${sc.n}-Quelle · ${sc.w} × ${sc.h}`;
-    const z = $('#pzoom').value, fit = $('#frame').clientWidth / 1920;
-    const k = z === 'fit' ? fit : Number(z);
-    $('#canvas').style.transform = `scale(${k})`;
-    $('#canvas').style.setProperty('--k', k);
-    Object.assign($('#sizer').style, { width: 1920 * k + 'px', height: 1080 * k + 'px' });
-  }
-  new ResizeObserver(() => setWidth()).observe($('#frame'));
+  function setWidth() { $('#pw').value = PW[tab]; $('#frame').style.setProperty('--pw', PW[tab] + 'px'); }
   inputs.forEach(el => el.addEventListener('input', () => {
     const k = el.dataset.k, d = DEFAULTS[k];
     state[k] = el.type === 'checkbox' ? el.checked : typeof d === 'number' ? Number(el.value) : el.value;
@@ -3251,7 +3119,7 @@ function startEditor() {
     }
   };
   $('#pbg').onchange = e => { $('#stage').className = 'stage bg-' + e.target.value; };
-  $('#pzoom').onchange = setWidth;
+  $('#pw').onchange = e => { $('#frame').style.setProperty('--pw', e.target.value + 'px'); };
   $('#pdemo').onchange = preview;
   setWidth();
   fill(); update();
@@ -3289,6 +3157,12 @@ function startEditor() {
   }
   $('#quizToggle').onclick = () => { quizOn = !quizOn; try { localStorage.setItem('tco-quiz-on', quizOn ? '1' : '0'); } catch {} applyModes(); };
   $('#alertsToggle').onclick = () => { alertsOn = !alertsOn; try { localStorage.setItem('tco-alerts-on', alertsOn ? '1' : '0'); } catch {} applyModes(); };
+  /* --- Hell / Dunkel --- */
+  const applyTheme = dark => { document.body.classList.toggle('dark', dark); $('#themeToggle').textContent = dark ? '☀️' : '🌙'; };
+  let dark = false;
+  try { dark = localStorage.getItem('tco-theme') === 'dark'; } catch {}
+  applyTheme(dark);
+  $('#themeToggle').onclick = () => { dark = !dark; try { localStorage.setItem('tco-theme', dark ? 'dark' : 'light'); } catch {} applyTheme(dark); };
   applyModes();
 
   /* --- Quiz-Brett-Editor --- */
