@@ -518,7 +518,7 @@ const FONTS = ['Inter','Roboto','Poppins','Montserrat','Nunito','Lato','Open San
 const SYSTEM_FONTS = ['Arial','Segoe UI','Verdana','Tahoma','Trebuchet MS','Georgia','Impact','Comic Sans MS','Consolas'];
 
 // Eigene GIFs im Ordner gifs/ dieser Seite (Dateinamen hier eintragen)
-const APP_VERSION = '20.10.2026, 19:35';
+const APP_VERSION = '20.10.2026, 19:45';
 // Alerts sind pausiert: in OBS erscheint nichts (die Vorschau im Editor funktioniert weiter)
 const ALERTS_PAUSED = true;
 const GIF_BASE = 'gifs/';
@@ -1747,7 +1747,7 @@ function startBar(cfg) {
   wrap.className = 'pos-' + cfg.mPos;
   wrap.style.setProperty('--px', cfg.mExtra + 'px');
   const firstOn = [1, 2, 3, 4].find(i => cfg[`mB${i}On`]) || 1;
-  wrap.style.setProperty('--mfont', fontStack(cfg[`mB${firstOn}Font`], cfg.fontFile));
+  wrap.style.setProperty('--mfont', fontStack('Minecraft (Original)'));
   document.body.appendChild(wrap);
 
   const tint = (hex, f) => { const n = parseInt(hex.slice(1), 16); return '#' + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => Math.round(v + (255 - v) * f).toString(16).padStart(2, '0')).join(''); };
@@ -1769,7 +1769,9 @@ function startBar(cfg) {
     if (b.metric === 'boss' && !b.goal) b.goal = 1000;
     b.label = (cfg[`mB${i}Label`] || '').trim() || b.m.short;
     b.tpl = (cfg[`mB${i}Tpl`] || '').trim() || (b.metric === 'boss' ? '{label} · Stufe {level} · {current} HP' : '{label}: {current}' + (b.goal ? ' / {goal}' : ''));
-    const P = k => cfg[`mB${i}${k}`] ?? BAR_DESIGN[k];
+    // Aussehen immer original Minecraft (ältere Links mit anderen Werten werden überschrieben)
+    const FIXED = { Style: 'tex', Font: 'Minecraft (Original)', Width: 182, Height: 5, Radius: 0, TextSize: 100, TextColor: '#ffffff' };
+    const P = k => k in FIXED ? FIXED[k] : cfg[`mB${i}${k}`] ?? BAR_DESIGN[k];
     b.dir = P('Dir'); b.popups = P('Popups'); b.countUp = P('CountUp'); b.aura = P('Aura');
     b.el = document.createElement('div');
     b.el.className = 'bb' + (b.goal || b.metric === 'boss' ? '' : ' nogoal') + ' st-' + P('Style') + (P('Shine') ? ' shine' : '') + (P('Ghost') ? '' : ' noghost');
@@ -1828,7 +1830,7 @@ function startBar(cfg) {
   extra.className = 'bb-extra';
   extra.innerHTML = `<div class="bb-hype" hidden><div class="bb-hype-text"></div><div class="bb-hype-track"><div class="bb-hype-fill"></div></div></div><div class="bb-top" hidden></div><div class="bb-ticker" hidden></div>`;
   wrap.appendChild(extra);
-  if (cfg[`mB${firstOn}Font`] === 'Minecraft (Original)') extra.dataset.mcf = '1';
+  extra.dataset.mcf = '1';
   if (wrap.querySelector('[data-mcf]')) useMcFont(wrap);
 
   /* --- Speicher (bleibt in OBS erhalten) --- */
@@ -2813,24 +2815,16 @@ function startEditor() {
           </div>
           <div class="hint">Ohne Ziel steht nur die Zahl da, und der Balken zeigt den Stand im Vergleich zum Höchstwert dieses Streams. Startwert zählt nur bei „gesamt“/„selbst gezählt“.</div>
           <label class="f">Ziel erreicht → nächstes Ziel um so viel höher (0 = aus)<input type="number" min="0" step="1" data-k="mB${i}Step" placeholder="0"></label>
-          <div class="sect">Farbe &amp; Form</div>
+          <div class="sect">Farbe &amp; Unterteilung</div>
+          <div class="hint">Aussehen und Schrift sind immer original Minecraft: echte Bossleiste, echte Item-Symbole und die echte Spielschrift.</div>
           <label class="f">Farbe<select data-k="mB${i}Color"><option value="purple">Lila (Wither)</option><option value="pink">Pink (Enderdrache)</option><option value="blue">Blau</option><option value="red">Rot</option><option value="green">Grün</option><option value="yellow">Gelb</option><option value="white">Weiß</option><option value="custom">Eigene Farbe …</option></select></label>
           <div data-show="mB${i}Color=custom">${color(`mB${i}Hex`, 'Eigene Farbe')}</div>
-          <label class="f">Stil<select data-k="mB${i}Style"><option value="tex">⛏ Original Minecraft (echte Texturen)</option><option value="pixel">Pixel (nachgezeichnet)</option><option value="flat">Einfarbig</option><option value="grad">Farbverlauf</option></select></label>
-          <div data-show="mB${i}Style=grad">${color(`mB${i}Hex2`, 'Zweite Farbe für den Verlauf')}</div>
-          <div class="hint" data-show="mB${i}Style=tex">Nutzt die echte Bossleiste und die echten Item-Symbole aus Minecraft 1.21.4. Sie werden beim Start aus dem Internet geladen. Ohne Internet erscheint automatisch der nachgezeichnete Pixel-Stil. Am originalgetreuesten mit Länge 182, Dicke 5, Rundung 0 und der Schriftart „Minecraft“.</div>
-          ${range(`mB${i}Width`, 'Länge', 60, 400, 2, '')}
-          ${range(`mB${i}Height`, 'Dicke', 2, 20, 1, '')}
-          ${range(`mB${i}Radius`, 'Ecken-Rundung', 0, 10, 0.5, '')}
           <label class="f">Unterteilungen<select data-k="mB${i}Notches"><option value="0">Keine</option><option value="6">6</option><option value="10">10</option><option value="12">12</option><option value="20">20</option></select></label>
           <label class="f">Verhalten<select data-k="mB${i}Dir"><option value="fill">Balken füllt sich</option><option value="drain">Balken leert sich (Ziel = Wither besiegt)</option></select></label>
           <label class="c"><input type="checkbox" data-k="mB${i}Hide"> Nur Text, ohne Balken</label>
 
-          <div class="sect">Schrift &amp; Größe</div>
-          <label class="f">Schriftart<select data-k="mB${i}Font">${pixelFonts.map(f => `<option>${f}</option>`).join('')}</select></label>
+          <div class="sect">Größe</div>
           ${range(`mB${i}Size`, 'Gesamtgröße', 1, 8, 0.5, '×')}
-          ${range(`mB${i}TextSize`, 'Schriftgröße', 50, 200, 5, '%')}
-          <div class="row">${color(`mB${i}TextColor`, 'Textfarbe')}${color(`mB${i}TextShadow`, 'Schattenfarbe')}</div>
 
           <div class="sect">Icon &amp; Effekte</div>
           <label class="f">Icon neben dem Titel<select data-k="mB${i}Icon"><option value="auto">Automatisch passend</option><option value="none">Keins</option>${itemOpts}</select></label>
